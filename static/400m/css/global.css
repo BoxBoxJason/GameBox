@@ -1,0 +1,125 @@
+/*
+* CSS module for 400m web minigame
+* author: @BoxBoxJason
+* STYLING GLOBAL ELEMENTS
+*/
+
+@font-face {
+   font-family: "Barlow";
+   src: url("../fonts/Barlow-Regular.ttf") format('truetype');
+   font-weight: normal;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: "Barlow";
+   src: url("../fonts/Barlow-Bold.ttf") format('truetype');
+   font-weight: bold;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: "Barlow";
+   src: url("../fonts/Barlow-Italic.ttf") format('truetype');
+   font-weight: normal;
+   font-style: italic;
+}
+
+@font-face {
+   font-family: "Barlow";
+   src: url("../fonts/Barlow-BoldItalic.ttf") format('truetype');
+   font-weight: bold;
+   font-style: italic;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Barlow";
+}
+
+body {
+   background: 
+   linear-gradient(135deg,#0000 20.5%,#ffffff 0 29.5%,#0000 0) 0 50px,
+   linear-gradient( 45deg,#0000 8%,#ffffff 0 17%, #0000 0 58%) 100px 0,
+   linear-gradient(135deg,#0000 8%,#ffffff 0 17%, #0000 0 58%,#ffffff 0 67%,#0000 0),        
+   linear-gradient( 45deg,#0000 8%,#ffffff 0 17%, #0000 0 58%,#ffffff 0 67%,#0000 0 83%,#ffffff 0 92%,#0000 0),
+   #993c35;
+   background-size: 200px 200px;
+
+}
+
+.close-button {
+	position: relative;
+   left: calc(100% - 20px);
+	width: 20px;
+	height: 20px;
+   cursor: pointer;
+}
+
+
+/* ANIMATED COMPONENTS */
+
+/* Loading */
+.loader-wrapper{
+    width: 120px;
+    height: 120px;
+    margin: 100px auto 0;
+}
+
+.loader {
+    width: 80px;
+    height: 80px;
+    color: #000;
+    background: linear-gradient(currentColor 0 0),
+           linear-gradient(currentColor 0 0),
+           linear-gradient(currentColor 0 0),
+           linear-gradient(currentColor 0 0);
+    background-size: 40px 40px;
+    background-repeat: no-repeat;
+    animation: shapes-53h9rphg 2.0999999999999996s infinite cubic-bezier(0.3,1,0,1);
+ }
+ 
+ @keyframes shapes-53h9rphg {
+    0% {
+       background-position: 0    0,100% 0   ,100% 100%,0 100%;
+    }
+ 
+    33% {
+       background-position: 0    0,100% 0   ,100% 100%,0 100%;
+       width: 120px;
+       height: 120px;
+    }
+ 
+    66% {
+       background-position: 100% 0,100% 100%,0    100%,0 0;
+       width: 120px;
+       height: 120px;
+    }
+ 
+    100% {
+       background-position: 100% 0,100% 100%,0    100%,0 0;
+    }
+ }
+
+ /* Glowing Title */
+#topBar{
+   position: fixed;
+   top: 0;
+   width: 100vw;
+   transform-origin: top left;
+   transition: transform 0.3s ease-in-out;
+   background-color: #993c35;
+   border-bottom: 2px solid #000;
+}
+
+
+h1 {
+   text-align: center;
+   font-size: 40pt;
+   font-weight: 700;
+   line-height: 1.2;
+   color: #000000;
+   letter-spacing: 5px;
+   transition: font-size 0.3s ease-in-out;
+}

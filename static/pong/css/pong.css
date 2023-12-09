@@ -1,0 +1,151 @@
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	color: white;
+}
+
+
+body {
+	background: conic-gradient(from -60deg at 50% calc(100%/3),#000000 0 120deg,#0000 0),
+	conic-gradient(from 120deg at 50% calc(200%/3),#000000 0 120deg,#0000 0),
+	conic-gradient(from  60deg at calc(200%/3),#000000 60deg,#333 0 120deg,#0000 0),
+	conic-gradient(from 180deg at calc(100%/3),#666 60deg,#000000 0 120deg,#0000 0),
+	linear-gradient(90deg,#666 calc(100%/6),#333 0 50%,
+	#666 0 calc(500%/6), #333 0);
+	background-size: 173px 100px;
+}
+
+.gameContainer {
+	background: radial-gradient(#e66465 60%, #9198e5);
+	border-radius: 70px;
+	margin-right: calc(10% - 40px);
+	margin-left: calc(10% - 40px);
+	margin-top: 2%;
+	padding: 30px;
+}
+
+#gameFrame {
+	background-color: black;
+	border-radius: 50px;
+	height: 85vh;
+	margin: auto;
+    width: 80vw;
+    display: flex;
+}
+
+/** Top bar (Scores and game state message) **/
+.topBar {
+	width: 50%;
+	height: 10%;
+	display: flex;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.score {
+	color: green;
+	height: 50px;
+	width: 50px;
+	flex: 20%;
+    margin-top: 1%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+
+#gameState {
+    flex: 60%;
+    color: #c9cbff;
+    margin-top: 1%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/** Paddles **/
+.paddle {
+	height: 100px;
+	width: 15px;
+	border-radius: 50%;
+	background-color: white;
+	position: relative;
+	top: calc(50% - 50px);
+}
+
+#paddle1 {
+	right: calc(100% - 30px);
+	box-shadow: inset 0 0 18px #0af,
+        inset -6px 0 18px lightblue,
+        inset 6px 0 18px #0ff,
+        inset 6px 0 30px #0ff,
+        0 0 18px #0ff,
+        4px 0 18px white;
+}
+
+#paddle2 {
+	right: 0%;
+	box-shadow: inset 0 0 18px #f20,
+        inset 6px 0 18px orangered,
+        inset -6px 0 18px #fca08d,
+        inset 6px 0 30px #fca08d,
+        0 0 18px #f20,
+        -4px 0 18px white;
+}
+
+/** Ball style **/
+#ball {
+	width: 30px;
+	height: 30px;
+	border-radius: 30px;
+    position: absolute;
+    top: calc(50% - 15px);
+    right: calc(50% - 15px);
+    box-shadow: inset 0 0 18px #fff,
+        inset 6px 0 18px violet,
+        inset -6px 0 18px #0ff,
+        inset 6px 0 30px violet,
+        inset -6px 0 30px #0ff,
+        0 0 18px #fff, -4px 0 18px
+        violet, 4px 0 18px #0ff;
+}
+
+fieldset {
+	border-radius: 30px;
+	border: 3px groove dimgray;
+	margin-left: 20%;
+	margin-right: 20%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	background: linear-gradient(90deg,#164f01 0%,#164f01 10%,
+	#258701 10%, #258701 20%,
+	#33b802 20%, #33b802 30%,
+	#3dde02 30%,#3dde02 40%,
+	#eeff03 40%,#eeff03 50%,
+	#ffe521 50%,#ffe521 60%,
+	#ebbc02 60%,#ebbc02 70%,
+	#ff3903 70%,#ff3903 80%,
+	#ff0603 80%,#ff0603 90%,
+	#cc0502 90%);
+}
+
+fieldset legend {
+	font-size: 15pt;
+}
+
+fieldset input {
+	opacity: 0;
+	width: 0;
+}
+
+fieldset label {
+	width: 10%;
+	aspect-ratio: 1/1;
+}
+
+fieldset input[type="radio"]:checked + label {
+	background: rgba(0,0,0,0.8);
+	clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);}

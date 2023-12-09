@@ -1,57 +1,52 @@
-import mysql from 'mysql2/promise';
-import db_config from '../constants.mjs'
+import sqlite3 from 'sqlite3';
+import { db_path } from '../constants.mjs';
 
-async function initDatabase() {
-    try {
-      const connection = await mysql.createConnection(db_config);
 
-      // Check if the database exists, create if not
-      const [rows] = await connection.execute(`SHOW DATABASES LIKE ?`, [process.env.DB_NAME]);
-      if (rows.length === 0) {
-        await connection.execute(`CREATE DATABASE ${process.env.DB_NAME}`);
-        console.log('Database created.');
-      }
-      await connection.end();
-      await createTables();
-    }
-    catch (error) {
-      console.error('Error initializing database:', error);
-    }
+export function initDatabase() {
+    const db = connectDB();
+    createTables(db);
+    db.close();
 }
 
 
-async function createTables() {
-    try {
-        const connection = await mysql.createConnection(db_config);
+export function connectDB(){
+    return new sqlite3.Database(db_path);
+}
 
-        await connection.execute(`
+
+function createTables(db) {
+    db.serialize(() => {
+        db.run(`
         CREATE TABLE IF NOT EXISTS Users (
-            "id" INT AUTO_INCREMENT PRIMARY KEY,
-            "username" VARCHAR(255) NOT NULL,
-            "password" VARCHAR(255) NOT NULL
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username VARCHAR(32) UNIQUE NOT NULL,
+            password VARCHAR(64) NOT NULL,
+            email VARCHAR(255) UNIQUE NOT NULL
         );
-
+        
         CREATE TABLE IF NOT EXISTS Games (
-            "id" INT AUTO_INCREMENT PRIMARY KEY,
-            "slug" VARCHAR(255) UNIQUE NOT NULL,
-            "description" TEXT NOT NULL,
-            "rules" TEXT NOT NULL,
-            "about" TEXT NOT NULL
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            slug VARCHAR(255) UNIQUE NOT NULL,
+            description TEXT NOT NULL,
+            rules TEXT NOT NULL,
+            about TEXT NOT NULL
         );
-
+        
         CREATE TABLE IF NOT EXISTS Scores (
-            "id" INT AUTO_INCREMENT PRIMARY KEY,
-            "value" FLOAT NOT NULL,
-            "user_id" INT NOT NULL,
-            "game_id" INT NOT NULL,
-            FOREIGN KEY ("user_id") REFERENCES Users("id"),
-            FOREIGN KEY ("game_id") REFERENCES Games("id")
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            value REAL NOT NULL,
+            user_id INTEGER NOT NULL,
+            game_id INTEGER NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES Users(id),
+            FOREIGN KEY (game_id) REFERENCES Games(id)
         );
-        `);
-
-        await connection.end();
-        }
-    catch (error){
-        console.error('Error while creating tables: ', error);
-    }
+        `, (err) => {
+            if (err) {
+                console.error('Could not create database tables', err); 
+            }
+            else{
+                console.log('Tables are available in database');
+            }
+        });
+    });
 }

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>GameBox</title>
+        <link rel="stylesheet" type="text/css" href="./login.css">
+    </head>
+
+    <body>
+        <div class="container-widget">
+            <table>
+                <colgroup>
+                    <col style="width: 100px;">
+                    <col style="width: 100px;">
+                </colgroup>
+                <tr>
+                    <td id="login_switch" style="border-color: #269bed;">Login</td>
+                    <td id="register_switch">Register</td>
+                </tr>
+            </table>
+            <form id="login_form">
+                <div class="form-section">
+                    <label for="username_login">Username</label>
+                    <input type="text" id="username_login" name="username_login" placeholder="Username" required autocomplete="username">
+                </div>
+
+                <div class="form-section">
+                    <label for="password_login">Password</label>
+                    <input type="password" id="password_login" name="password_login" placeholder="Password" required autocomplete="current-password">
+                </div>
+
+                <div class="form-section">
+                    <input type="submit" value="Login">
+                </div>
+            </form>
+
+            <form id="register_form" style="display: none;">
+                <div class="form-section">
+                    <label for="username_register">Username</label>
+                    <input type="text" id="username_register" name="username_register" title="Enter a valid username (3-20 characters, alphanumeric, spaces, underscores)" placeholder="Username" required autocomplete="username" pattern="^[a-zA-Z0-9_À-ÿ\s]{3,20}$">
+                </div>
+
+                <div class="form-section">
+                    <label for="email_register">Email</label>
+                    <input type="email" id="email_register" name="email_register" pattern="/^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/" placeholder="@email" required autocomplete="email">
+                </div>
+
+                <div class="form-section">
+                    <label for="password_register">Password</label>
+                    <input type="password" id="password_register" name="password_register" pattern="^(?=.*[!@#$%^&*()_+|~\-={}[\]:;\'<>,.?\/])(?=.*[a-zA-Z0-9]).{8,64}$" title="Password must contain at least one special character and one alphanumeric character. Length: 8-64 characters" placeholder="Password" required autocomplete="new-password">
+                </div>
+
+                <div class="form-section">
+                    <label for="password_register_confirmation">Confirm Password</label>
+                    <input type="password" id="password_register_confirmation" name="password_register_confirmation" pattern="^(?=.*[!@#$%^&*()_+|~\-={}[\]:;\'<>,.?\/])(?=.*[a-zA-Z0-9]).{8,64}$" title="Password must contain at least one special character and one alphanumeric character. Length: 8-64 characters" placeholder="Confirm password" required autocomplete="new-password">
+                </div>
+
+                <div class="form-section">
+                    <input type="submit" value="Register">
+                </div>
+            </form>
+        </div>
+
+        <script type="module" src="./frontendChecks.mjs"></script>
+    </body>
+</html>

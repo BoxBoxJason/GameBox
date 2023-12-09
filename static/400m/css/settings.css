@@ -1,0 +1,40 @@
+/*
+* CSS module for 400m web minigame
+* author: @BoxBoxJason
+* SETTINGS PANNEL STYLING
+*/
+
+#settings {
+    margin: 25px auto;
+    width: 80vw;
+    background-image: url("../images/settings.png");
+    background-repeat: no-repeat;
+    padding: 15px 15px 40px;
+    border: 5px outset black;
+    border-radius: 15px;
+}
+
+
+#settings h2 {
+    font-size: 25pt;
+    margin: 5px 10px 15px;
+}
+
+#settings fieldset {
+    width: 220px;
+    border-radius: 20px;
+    margin: 0 auto;
+    padding: 5px 10px 10px;
+    text-align: center;
+}
+
+#settings fieldset legend{
+    font-size: 16pt;
+    font-weight: bold;
+    text-align: left;
+}
+
+#settings table, #settings table tr{
+    width: 100%;
+}
+

@@ -1,56 +1,47 @@
 import bcrypt from 'bcrypt';
-import mysql from 'mysql2/promise';
-import { db_config } from '../constants.mjs';
-import { createTableRow, deleteTableRowMatchingColumns, editTableRowColumn, getTableRowColumn } from './models.mjs';
+import { createTableRow, deleteTableRowMatchingColumns, editTableRowColumn, getTableRowIdMatchingColumnValue } from './models.mjs';
 
-async function createUser(username,password){
+export async function createUserDB(username,password,email){
     const hashed_password = await new Promise((resolve, reject) => {
         bcrypt.hash(password, 10, (err, hash) => {
             if (err) {
-                console.error(`Could not create user ${username} because of password hash error`);
+                console.error(`Could not hash the password`);
                 reject(err);
             }
             else {resolve(hash);}
         });
     });
-    return await createTableRow('Users',['"username"','"password"'],[username,hashed_password]);
+
+    try {
+        return await createTableRow('Users',['"username"','"password"','"email"'],[username,hashed_password,email]);
+    }
+    catch (error){
+        console.error(`Could not create user ${username}`);
+        throw error;
+    }
 }
 
 
 async function deleteUserFromId(user_id){return await deleteTableRowMatchingColumns('Users',['"id"'],[user_id]);}
 
-async function setUserPassword(user_id,passsword){
-    let success = true;
+async function setUserPassword(user_id,password){
     const hashed_password = await new Promise((resolve, reject) => {
         bcrypt.hash(password, 10, (err, hash) => {
             if (err) {
-                console.error(`Could not create user ${username} because of password hash error`);
+                console.error(`Could not hash the password`);
                 reject(err);
             }
             else {resolve(hash);}
         });
     });
-
-    success = await editTableRowColumn('Users',user_id,'"password"',hashed_password);
-
-    return success;
-}
-
-
-async function getUserIdFromName(username) {
-    let user_id = null;
-    try {
-        const connection = mysql.createConnection(db_config);
-        const [rows] = await connection.execute('SELECT "id" FROM Users WHERE "username" = ?', [username]);
-        await connection.end();
-
-        if (rows.length > 0) {
-            user_id = rows[0].id;
-        }
+    try{
+        return await editTableRowColumn('Users',user_id,'"password"',hashed_password);
     }
     catch (error) {
-        console.error('Error retrieving user ID: ', error);
+        console.error(`Could not change user ${username} password because of password hash error`);
+        throw error;
     }
-
-    return user_id;
 }
+
+
+async function getUserIdFromName(username) {return await getTableRowIdMatchingColumnValue('Users','"username"',username);}

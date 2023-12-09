@@ -1,0 +1,166 @@
+/*
+* CSS module for 400m web minigame
+* author: @BoxBoxJason
+* GAMEFRAME AND GAME ELEMENTS STYLING
+*/
+
+
+#showDistance {
+	height: 90%;
+	width: 100%;
+}
+
+#gameFrame {
+	width: 95vw;
+	height: 85vh;
+	border: 5px outset black;
+	border-radius: 15px;
+	background-color: rgba(200,200,200,0.5);
+	margin: 0 auto 20px;
+}
+
+
+#gameFrame p{
+	margin: 0;
+	width: 100%;
+	text-align: center;
+	font-size: 13pt;
+}
+
+
+.gameFrame-child {
+	flex: 50%;
+	display: block;
+}
+
+.gameFrame-child:first-of-type {
+	background-color: rgba(207, 10, 184,0.3);
+}
+
+.gameFrame-child:last-of-type{
+	background-color: rgba(20,150,50,0.3)
+}
+
+
+#historyArea {
+	width: fit-content;
+	display: grid;
+	margin: 10px auto 0;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+
+
+#diceArea {
+	background-image: url('../images/diceArea.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	margin: 10px auto;
+	width: 51vh;
+	height: 51vh;
+}
+
+.gameButtons{
+	margin: 10px auto 0;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 15px;
+	width: fit-content;
+}
+
+.gameButton {
+	text-align: center;
+	width: 100px;
+	height: 100px;
+	margin: 0;
+	border: 3px outset black;
+	border-radius: 15px;
+	background-color: #505050;
+    cursor: pointer;
+    transition: background-color 0.6s, color 0.6s;
+}
+
+.gameButton:hover {
+	background-color: #353535;
+	color: #fff;
+}
+
+.button-icon {
+	width: 100px;
+	height: 100px;
+	object-fit: contain;
+}
+
+.dicesSave {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 5px;
+	width: 110px;
+}
+  
+.dice-1, .dice-2, .dice-3, .dice-4, .dice-5, .dice-6 {
+	width: 50px;
+	height: 50px;
+	background-size: contain;
+	margin: 0;
+}
+
+
+.throwDice {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    animation-duration: 4s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    transform-style: preserve-3d;
+    margin: 0 25px;
+    left: calc(50% - 100px);
+    top: calc(50% - 25px);
+}
+
+
+@keyframes roll1 {
+    0% { transform: rotateX(0deg) rotateY(0deg);}
+    100% { transform: rotateX(4turn) rotateY(4turn); }
+}
+@keyframes roll2 {
+    0% { transform: rotateX(0deg) rotateY(0deg); }
+    100% { transform: rotateX(3.75turn) rotateY(4turn); }
+}
+@keyframes roll3 {
+    0% { transform: rotateX(0deg) rotateY(0deg); }
+    100% { transform: rotateX(4turn) rotateY(3.75turn); }
+}
+@keyframes roll4 {
+    0% { transform: rotateX(0deg) rotateY(0deg); }
+    100% { transform: rotateX(4turn) rotateY(4.25turn); }
+}
+@keyframes roll5 {
+    0% { transform: rotateX(0deg) rotateY(0deg); }
+    100% { transform: rotateX(4.25turn) rotateY(4turn); }
+}
+@keyframes roll6 {
+    0% { transform: rotateX(0deg) rotateY(0deg); }
+    100% { transform: rotateX(4.5turn) rotateY(4turn); }
+}
+
+.dice-1,.front {background-image: url("../images/Dice1.png");}
+.dice-2,.top {background-image: url("../images/Dice2.png");}
+.dice-3,.right {background-image: url("../images/Dice3.png");}
+.dice-4,.left {background-image: url("../images/Dice4.png");}
+.dice-5,.bottom {background-image: url("../images/Dice5.png");}
+.dice-6,.back {background-image: url("../images/Dice6.png");}
+.face {
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	background-size: contain;
+	box-sizing: border-box;
+}
+.front { transform: translateZ(25px);}
+.back { transform: translateZ(-25px) rotateY(180deg);}
+.right { transform: rotateY(90deg) translateX(25px); transform-origin: center right;}
+.left { transform: rotateY(-90deg) translateX(-25px); transform-origin: center left;}
+.top { transform: rotateX(90deg) translateY(-25px); transform-origin: center top;}
+.bottom { transform: rotateX(-90deg) translateY(25px); transform-origin: center bottom;}

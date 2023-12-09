@@ -1,0 +1,86 @@
+@font-face {
+    font-family: "Barlow";
+    src: url("./fonts/Barlow-Regular.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Barlow";
+    src: url("./fonts/Barlow-Bold.ttf") format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Barlow";
+    src: url("./fonts/Barlow-Italic.ttf") format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Barlow";
+    src: url("./fonts/Barlow-BoldItalic.ttf") format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Barlow";
+}
+
+table {
+    margin: 0 auto 5px;
+}
+
+table tr td {
+    border-bottom: 2px solid #aaa;
+    padding-bottom: 5px;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+form {
+    background-color: #aaa;
+    border: 2px inset #000;
+    margin: auto;
+    border-radius: 6px;
+    width: 300px;
+}
+
+
+.form-section {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+
+label {
+    font-size: 13pt;
+}
+
+
+input[type="text"], input[type="email"], input[type="password"]{
+    text-align: center;
+    width: 200px;
+    height: 25px;
+    margin: 0 auto 8px;
+    font-size: 13pt;
+}
+
+input[type="submit"] {
+    text-align: center;
+    height: 30px;
+    margin: 0 auto 8px;
+    padding: 4px 10px;
+    font-size: 13pt;
+    font-weight: bold;
+    text-transform: uppercase;
+}
