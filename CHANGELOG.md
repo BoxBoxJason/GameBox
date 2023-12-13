@@ -1,15 +1,15 @@
 # GameBox CHANGELOG
 
-## GameBox V1.0.2 OLYMPIC 400M RELEASE (?/12/2023)
+## GameBox V1.0.2 OLYMPIC 400M RELEASE (13/12/2023)
 
 ### New Features
-- Released Olympic 400m minigame
+- Implemented sessions to keep users logged in
 
 ### Fixes
--
+None
 
 ### TODO
-1. Implement sessions to keep users 
+1. Implement score tracking
 2. Implement new games
 
 ## GameBox V1.0.1 AUTHENTIFICATION RELEASE (04/12/2023)

@@ -20,3 +20,11 @@ export class NotUniqueDatabaseRowException extends Error {
         this.name = 'NotUniqueDatabaseRowException';
     }
 }
+
+
+export class AuthFailedException extends Error {
+    constructor(message){
+        super(message);
+        this.name = 'AuthFailedException';
+    }
+}

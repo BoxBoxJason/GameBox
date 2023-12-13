@@ -1,18 +1,15 @@
 import { getTableRowColumn, getTableRowIdMatchingColumnValue } from "../models/models.mjs";
 import { InvalidArgumentException,NotUniqueDatabaseRowException } from "../../utils/exceptions.mjs"
-import { createUserDB } from "../models/users.mjs"
+import { createUserDB, getUserIdFromNameOrEmail } from "../models/users.mjs"
 
 
-async function checkUserPassword(user_id,attempt_password) {
+export async function checkUserPassword(username_or_email,attempt_password) {
     let password_matches = false;
-    const user_password = await getTableRowColumn('Users','"password"',user_id);
+    let user_id = await getUserIdFromNameOrEmail(username_or_email);
 
     if (user_password != null) {
+        const user_password = await getTableRowColumn('Users','"password"',user_id);
         password_matches = bcrypt.compare(attempt_password,user_password);
-    }
-    else{
-        console.error('Password could not be retrieved from database');
-        password_matches = false;
     }
 
     return password_matches;
@@ -25,6 +22,7 @@ export async function createUser(username,password,email) {
     if (! checkEmail(email)){throw new InvalidArgumentException("Invalid Email");}
     if (getTableRowIdMatchingColumnValue('Users','"username"',username) != null){throw new NotUniqueDatabaseRowException(`Username ${username} already taken`);}
     if (getTableRowIdMatchingColumnValue('Users','"email"',email) != null){throw new NotUniqueDatabaseRowException(`email ${email} already taken`);}
+    
     return await createUserDB(username,password,email);
 }
 

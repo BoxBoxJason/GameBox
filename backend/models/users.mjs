@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { createTableRow, deleteTableRowMatchingColumns, editTableRowColumn, getTableRowIdMatchingColumnValue } from './models.mjs';
+import { createTableRow, deleteTableRowMatchingColumns, editTableRowColumn, getTableRowColumn, getTableRowIdMatchingColumnValue } from './models.mjs';
 
 export async function createUserDB(username,password,email){
     const hashed_password = await new Promise((resolve, reject) => {
@@ -34,7 +34,7 @@ async function setUserPassword(user_id,password){
             else {resolve(hash);}
         });
     });
-    try{
+    try {
         return await editTableRowColumn('Users',user_id,'"password"',hashed_password);
     }
     catch (error) {
@@ -44,4 +44,11 @@ async function setUserPassword(user_id,password){
 }
 
 
-async function getUserIdFromName(username) {return await getTableRowIdMatchingColumnValue('Users','"username"',username);}
+export async function getUserIdFromNameOrEmail(username_or_email) {
+    let user_id = await getTableRowIdMatchingColumnValue('Users','"username"',username_or_email);
+    if (user_id == null) user_id = await getTableRowIdMatchingColumnValue('Users','"email"',username_or_email);
+    return user_id;
+}
+
+
+export async function getUsernameFromId(user_id){return await getTableRowColumn('Users','"username"',user_id);}
