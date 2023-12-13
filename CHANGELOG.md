@@ -6,7 +6,8 @@
 - Implemented sessions to keep users logged in
 
 ### Fixes
-None
+- Fixed fonts import
+- Changed files tree for some subprojects
 
 ### TODO
 1. Implement score tracking

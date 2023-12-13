@@ -24,7 +24,7 @@ app.use(session({
 app.use("/static", express.static(static_folder_path));
 
 app.get('/', (req, res) => {
-    res.redirect(301, '/static/index.html');
+    res.redirect(301, '/static/home/index.html');
 });
 
 app.use('/games',games_router);

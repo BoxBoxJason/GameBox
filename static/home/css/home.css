@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Barlow";
+    border: 2px solid red;
+}
+
+.nav_bar {
+    width: 80vw;
+    margin: 0 auto 5px;
+}
+
+.home_display {
+    display: flex;
+    width: 100vw;
+}
+
+
+.main {
+    width: 80vw;
+    flex: 80%;
+}
+
+.side {
+    width: 10vw;
+    flex: 10%;
+}

@@ -5,6 +5,11 @@ import { getUserIdFromNameOrEmail, getUsernameFromId } from '../models/users.mjs
 const auth_router = Router();
 
 
+auth_router.get('', (req,res) => {
+    res.redirect('/static/auth/index.html');
+});
+
+
 auth_router.post('/register', async function(req,res) {
     const { username, password, email } = req.body;
     await createUser(username,password,email);
