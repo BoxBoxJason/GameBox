@@ -1,6 +1,6 @@
 # GameBox CHANGELOG
 
-## GameBox V1.0.2 OLYMPIC 400M RELEASE (13/12/2023)
+## GameBox V1.0.2 SESSIONS RELEASE (13/12/2023)
 
 ### New Features
 - Implemented sessions to keep users logged in
