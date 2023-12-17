@@ -5,51 +5,68 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Pong</title>
+		<link rel="icon" href="/static/resources/images/logos/gamebox_symbol.png" type="image/x-icon">
 		<link rel="stylesheet" type="text/css" href="../resources/css/fonts.css">
 		<link rel="stylesheet" type="text/css" href="./css/pong.css">
 	</head>
 	
 	<body>
+    <header>
 
-		<div class="gameContainer">
-			<div id="gameFrame">
-				<div class="topBar">
-					<h1 class="score" id="score1">0</h1>
-					<h1 id="gameState">Press Enter to play</h1>
-					<h1 class="score" id="score2">0</h1>
-				</div>
-	
-				<div class="paddle" id="paddle1"></div>
-				<div id="ball"></div>
-				<div class="paddle" id="paddle2"></div>
-				
-			</div>
-		</div>
-		<fieldset>
-			<legend>Difficulty</legend>
-			<input type="radio" checked="checked" id="1" class="difficultyButton" name="difficulty" value="1">
-			<label for="1"></label>
-			<input type="radio" id="2"class="difficultyButton" name="difficulty" value="2">
-			<label for="2"></label>
-			<input type="radio" id="3" class="difficultyButton" name="difficulty" value="3">
-			<label for="3"></label>
-			<input type="radio" id="4" class="difficultyButton" name="difficulty" value="4">
-			<label for="4"></label>
-			<input type="radio" id="5" class="difficultyButton" name="difficulty" value="5">
-			<label for="5"></label>
-			<input type="radio" id="6" class="difficultyButton" name="difficulty" value="6">
-			<label for="6"></label>
-			<input type="radio" id="7" class="difficultyButton" name="difficulty" value="7">
-			<label for="7"></label>
-			<input type="radio" id="8" class="difficultyButton" name="difficulty" value="8">
-			<label for="8"></label>
-			<input type="radio" id="9" class="difficultyButton" name="difficulty" value="9">
-			<label for="9"></label>
-			<input type="radio" id="10" class="difficultyButton" name="difficulty" value="10">
-			<label for="10"></label>
-		</fieldset>
+    </header>
+    <main>
+      <div class="gameContainer">
+        <div id="gameFrame">
+          <div class="topBar">
+            <h1 class="score" id="score1">0</h1>
+            <h1 id="gameState">Press Enter to play</h1>
+            <h1 class="score" id="score2">0</h1>
+          </div>
+    
+          <div class="paddle" id="paddle1"></div>
+          <div id="ball"></div>
+          <div class="paddle" id="paddle2"></div>
+          
+        </div>
+      </div>
+      <fieldset>
+        <legend>Difficulty</legend>
+        <input type="radio" checked="checked" id="1" class="difficultyButton" name="difficulty" value="1">
+        <label for="1"></label>
+        <input type="radio" id="2"class="difficultyButton" name="difficulty" value="2">
+        <label for="2"></label>
+        <input type="radio" id="3" class="difficultyButton" name="difficulty" value="3">
+        <label for="3"></label>
+        <input type="radio" id="4" class="difficultyButton" name="difficulty" value="4">
+        <label for="4"></label>
+        <input type="radio" id="5" class="difficultyButton" name="difficulty" value="5">
+        <label for="5"></label>
+        <input type="radio" id="6" class="difficultyButton" name="difficulty" value="6">
+        <label for="6"></label>
+        <input type="radio" id="7" class="difficultyButton" name="difficulty" value="7">
+        <label for="7"></label>
+        <input type="radio" id="8" class="difficultyButton" name="difficulty" value="8">
+        <label for="8"></label>
+        <input type="radio" id="9" class="difficultyButton" name="difficulty" value="9">
+        <label for="9"></label>
+        <input type="radio" id="10" class="difficultyButton" name="difficulty" value="10">
+        <label for="10"></label>
+      </fieldset>
 
-		<script type="module" src="./js/game.mjs"></script>
-		
+      <script type="module" src="./js/game.mjs"></script>
+    </main>
+
+    <footer>
+      <p style="font-weight: bold; text-transform: uppercase;">Thanks for using GameBox !</p>
+      <table class="links">
+        <tr>
+          <td><a href="https://github.com/BoxBoxJason/GameBox"><img src="../resources/images/logos/github.png" title="Go to GameBox GitHub"></a></td>
+          <td><a href="https://www.linkedin.com/in/lo%C3%AFck-goupil-hallay-710619245/"><img src="../resources/images/logos/linkedin.png" title="Go to author LinkedIn"></a></td>
+        </tr>
+      </table>
+      <p>Developped by <a href="https://github.com/BoxBoxJason">@BoxBoxJason</a></p>
+      <p>Designs and logos by <a href="https://github.com/BoxBoxJason">@BoxBoxJason</a></p>
+    </footer>
+
 	</body>
 </html>

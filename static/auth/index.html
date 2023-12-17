@@ -1,68 +1,91 @@
 <!DOCTYPE html>
 
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>GameBox</title>
-        <link rel="stylesheet" type="text/css" href="../resources/css/fonts.css">
-        <link rel="stylesheet" type="text/css" href="./css/auth.css">
-    </head>
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="/static/resources/images/logos/gamebox_symbol.png" type="image/x-icon">
+    <title>GameBox</title>
+    <link rel="stylesheet" type="text/css" href="../resources/css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/nav_bar.css">
+    <link rel="stylesheet" type="text/css" href="./css/auth.css">
+  </head>
 
-    <body>
-        <div class="container-widget">
-            <table>
-                <colgroup>
-                    <col style="width: 100px;">
-                    <col style="width: 100px;">
-                </colgroup>
-                <tr>
-                    <td id="login_switch" style="border-color: #269bed;">Login</td>
-                    <td id="register_switch">Register</td>
-                </tr>
-            </table>
-            <form id="login_form">
-                <div class="form-section">
-                    <label for="username_email_login">Username</label>
-                    <input type="text" id="username_email_login" name="username_email_login" placeholder="username or email" required autocomplete="username">
-                </div>
+  <body>
+    <header>
 
-                <div class="form-section">
-                    <label for="password_login">Password</label>
-                    <input type="password" id="password_login" name="password_login" placeholder="Password" required autocomplete="current-password">
-                </div>
+    </header>
 
-                <div class="form-section">
-                    <input id="submit_login" type="submit" value="Login">
-                </div>
-            </form>
+    <main>
+      <div class="auth_widget">
+        <a href="/" title="Go back to home page"><img src="../resources/images/logos/gamebox.png" alt="GameBox logo" style="width: 300px; height: auto;"></a>
+        <table style="margin-top: 25px;">
+          <colgroup>
+            <col style="width: 100px;">
+            <col style="width: 100px;">
+          </colgroup>
+          <tr>
+            <td id="login_switch" style="border-color: #269bed;" title="Switch to Login form">Login</td>
+            <td id="register_switch" title="Switch to Register form">Register</td>
+          </tr>
+        </table>
+        <form id="login_form" method="POST">
+          <div class="form-section">
+            <label for="username_email_login">Username</label>
+            <input type="text" id="username_email_login" name="username_email_login" placeholder="username or email" required autocomplete="username">
+          </div>
 
-            <form id="register_form" style="display: none;">
-                <div class="form-section">
-                    <label for="username_register">Username</label>
-                    <input type="text" id="username_register" name="username_register" title="Enter a valid username (3-20 characters, alphanumeric, spaces, underscores)" placeholder="Username" required autocomplete="username" pattern="^[a-zA-Z0-9_À-ÿ\s]{3,20}$">
-                </div>
+          <div class="form-section">
+            <label for="password_login">Password</label>
+            <input type="password" id="password_login" name="password_login" placeholder="Password" required autocomplete="current-password">
+          </div>
 
-                <div class="form-section">
-                    <label for="email_register">Email</label>
-                    <input type="email" id="email_register" name="email_register" pattern="/^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/" placeholder="@email" required autocomplete="email">
-                </div>
+          <div class="form-section">
+            <input type="submit" value="Login">
+          </div>
+        </form>
 
-                <div class="form-section">
-                    <label for="password_register">Password</label>
-                    <input type="password" id="password_register" name="password_register" pattern="^(?=.*[!@#$%^&*()_+|~\-={}[\]:;\'<>,.?\/])(?=.*[a-zA-Z0-9]).{8,64}$" title="Password must contain at least one special character and one alphanumeric character. Length: 8-64 characters" placeholder="Password" required autocomplete="new-password">
-                </div>
+        <form id="register_form" style="display: none;" method="POST">
+          <div class="form-section">
+            <label for="username_register">Username</label>
+            <input type="text" id="username_register" name="username_register" title="Enter a valid username (3-20 characters, alphanumeric, spaces, underscores)" placeholder="Username" required autocomplete="username">
+          </div>
 
-                <div class="form-section">
-                    <label for="password_register_confirmation">Confirm Password</label>
-                    <input type="password" id="password_register_confirmation" name="password_register_confirmation" pattern="^(?=.*[!@#$%^&*()_+|~\-={}[\]:;\'<>,.?\/])(?=.*[a-zA-Z0-9]).{8,64}$" title="Password must contain at least one special character and one alphanumeric character. Length: 8-64 characters" placeholder="Confirm password" required autocomplete="new-password">
-                </div>
+          <div class="form-section">
+            <label for="email_register">Email</label>
+            <input type="email" id="email_register" name="email_register" placeholder="@email" required autocomplete="email">
+          </div>
 
-                <div class="form-section">
-                    <input id="submit_register" type="submit" value="Register">
-                </div>
-            </form>
-        </div>
+          <div class="form-section">
+            <label for="password_register">Password</label>
+            <input type="password" id="password_register" name="password_register" title="Password must contain at least one special character and one alphanumeric character. Length: 8-64 characters" placeholder="Password" required autocomplete="new-password">
+          </div>
 
-        <script type="module" src="./js/auth.mjs"></script>
-    </body>
+          <div class="form-section">
+            <label for="password_register_confirmation">Confirm Password</label>
+            <input type="password" id="password_register_confirmation" name="password_register_confirmation" title="Password must contain at least one special character and one alphanumeric character. Length: 8-64 characters" placeholder="Confirm password" required autocomplete="new-password">
+          </div>
+
+          <div class="form-section">
+            <input type="submit" value="Register">
+          </div>
+        </form>
+      </div>
+      <div id="alert_section"></div>
+    </main>
+
+    <footer>
+      <p style="font-weight: bold; text-transform: uppercase;">Thanks for using GameBox !</p>
+      <table class="links">
+        <tr>
+          <td><a href="https://github.com/BoxBoxJason/GameBox"><img src="../resources/images/logos/github.png" title="Go to GameBox GitHub"></a></td>
+          <td><a href="https://www.linkedin.com/in/lo%C3%AFck-goupil-hallay-710619245/"><img src="../resources/images/logos/linkedin.png" title="Go to author LinkedIn"></a></td>
+        </tr>
+      </table>
+      <p>Developped by <a href="https://github.com/BoxBoxJason">@BoxBoxJason</a></p>
+      <p>Designs and logos by <a href="https://github.com/BoxBoxJason">@BoxBoxJason</a></p>
+    </footer>
+
+    <script type="module" src="./js/auth.mjs"></script>
+  </body>
 </html>

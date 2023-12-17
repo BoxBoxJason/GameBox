@@ -1,39 +1,92 @@
 <!DOCTYPE html>
 
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>GameBox</title>
-        <link rel="stylesheet" type="text/css" href="../resources/css/fonts.css">
-        <link rel="stylesheet" type="text/css" href="./css/home.css">
-    </head>
+  <head>
+    <meta charset="utf-8">
+    <title>GameBox</title>
+    <link rel="icon" href="/static/resources/images/logos/gamebox_symbol.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../resources/css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/nav_bar.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="./css/home.css">
+  </head>
 
-    <body>
-        <div class="nav_bar">
-            <div style="width: fit-content; margin: auto;">
-                <button>Jeux</button>
-                <button>Scores</button>
-                <button>A propos</button>
-                <a href="/auth" ><button>Compte</button></a>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="/"><img src="../resources/images/logos/gamebox.png" alt="GameBox logo" title="Go to home page"></a></li>
+          <li><a href="/games" title="Go to games" class="nav_bar_child" title="Go to game selection">Games</a></li>
+          <li><a href="/scores" title="Go to scores" class="nav_bar_child" title="Go to score leaderboard">Scores</a></li>
+          <li><a href="/about" title="Go to about" class="nav_bar_child" title="Go to About">About</a></li>
+          <li>
+            <a href="/auth" id="nav_bar_avatar_ref"><img id="nav_bar_avatar" src="../resources/images/avatars/default.png" alt="Player avatar" title="Go to profile"></a>
+            <div id="profile_dropdown">
+              <form id="profile_form" action="/auth"><button type="submit" class="profile_dropdown_option" id="profile_button">Log In</button></form>
+              <form action="/auth/logout" method="POST"><button type="submit" class="profile_dropdown_option" id="logout_button">Log Out</button></form>
+              
             </div>
+          </li>
+        </ul>
+      </nav>
+      <script>
+        fetch('/auth/getAvatar')
+        .then(response => response.json())
+        .then(avatar => {
+            if (avatar != null) {
+                document.getElementById('nav_bar_avatar').src = `../resources/images/avatars/${avatar.avatar}`;
+                document.getElementById('nav_bar_avatar_ref').href = '';
+                document.getElementById('logout_button').style.display = 'block';
+                const profile_form = document.getElementById('profile_form');
+                profile_form.action = '/profile';
+                profile_form.method = 'POST';
+                document.getElementById('profile_button').innerHTML = 'Profile';
+            }
+            else {
+                document.getElementById('nav_bar_avatar').src = `../resources/images/avatars/default.png`;
+                document.getElementById('nav_bar_avatar_ref').href = '/auth';
+                document.getElementById('logout_button').style.display = 'none';
+                const profile_form = document.getElementById('profile_form');
+                profile_form.action = '/auth';
+                profile_form.method = 'GET';
+                document.getElementById('profile_button').innerHTML = 'Log in';
+            }
+        })
+        .catch(error => {
+          console.error('Could not fetch username and avatar for this session',error);
+        });
+      </script>
+    </header>
+
+    <main>
+      <div class="side left">
+
+      </div>
+
+      <div id="main">
+        <div id="games_display">
+          <h2>Games</h2>
         </div>
+          <div id="leaderboard">
+            <h2>Leaderboard</h2>
+          </div>
+      </div>
 
-        <div class="home_display">
-            <div class="side left">
+      <div class="side right">
 
-            </div>
+      </div>
+    </main>
 
-            <div id="main">
-                <div id="games_display">
-                    <h1>Games</h1>
-                </div>
-                <div id="leaderboard">
-                    <h1>Leaderboard</h1>
-                </div>
-            </div>
-            <div class="side right">
-
-            </div>
-        </div>
-    </body>
+    <footer>
+      <p style="font-weight: bold; text-transform: uppercase;">Thanks for using GameBox !</p>
+      <table class="links">
+        <tr>
+          <td><a href="https://github.com/BoxBoxJason/GameBox"><img src="../resources/images/logos/github.png" title="Go to GameBox GitHub"></a></td>
+          <td><a href="https://www.linkedin.com/in/lo%C3%AFck-goupil-hallay-710619245/"><img src="../resources/images/logos/linkedin.png" title="Go to author LinkedIn"></a></td>
+        </tr>
+      </table>
+      <p>Developped by <a href="https://github.com/BoxBoxJason">@BoxBoxJason</a></p>
+      <p>Designs and logos by <a href="https://github.com/BoxBoxJason">@BoxBoxJason</a></p>
+    </footer>
+  </body>
 </html>

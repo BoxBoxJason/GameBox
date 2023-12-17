@@ -1,7 +1,7 @@
 {
-  "name": "pong",
+  "name": "gamebox",
   "version": "1.0.0",
-  "description": "Pong web minigame",
+  "description": "Web minigames hosting server",
   "type": "module",
   "main": "index.mjs",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/BoxBoxJason/Pong.git"
+    "url": "https://github.com/BoxBoxJason/GameBox.git"
   },
   "keywords": [
     "GameBox",

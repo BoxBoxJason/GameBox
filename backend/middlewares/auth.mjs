@@ -1,15 +1,17 @@
-import { getTableRowColumn, getTableRowIdMatchingColumnValue } from "../models/models.mjs";
-import { InvalidArgumentException,NotUniqueDatabaseRowException } from "../../utils/exceptions.mjs"
+import bcrypt from 'bcrypt';
+import { getTableRowColumn } from "../models/models.mjs";
 import { createUserDB, getUserIdFromNameOrEmail } from "../models/users.mjs"
+import { checkEmailFormat, checkPasswordFormat, checkUsernameFormat } from "../../static/resources/js/credentialsChecks.mjs";
 
 
 export async function checkUserPassword(username_or_email,attempt_password) {
     let password_matches = false;
-    let user_id = await getUserIdFromNameOrEmail(username_or_email);
-
-    if (user_password != null) {
-        const user_password = await getTableRowColumn('Users','"password"',user_id);
-        password_matches = bcrypt.compare(attempt_password,user_password);
+    const user_id = await getUserIdFromNameOrEmail(username_or_email);
+    if (user_id != null){
+        let user_password_hash = await getTableRowColumn('Users','"password"',user_id);
+        if (user_password_hash != null) {
+            password_matches = bcrypt.compare(attempt_password,user_password_hash);
+        }
     }
 
     return password_matches;
@@ -17,26 +19,38 @@ export async function checkUserPassword(username_or_email,attempt_password) {
 
 
 export async function createUser(username,password,email) {
-    if (! checkUsername(username)){throw new InvalidArgumentException("Invalid Username");}
-    if (! checkPassword(password)){throw new InvalidArgumentException("Invalid Password");}
-    if (! checkEmail(email)){throw new InvalidArgumentException("Invalid Email");}
-    if (getTableRowIdMatchingColumnValue('Users','"username"',username) != null){throw new NotUniqueDatabaseRowException(`Username ${username} already taken`);}
-    if (getTableRowIdMatchingColumnValue('Users','"email"',email) != null){throw new NotUniqueDatabaseRowException(`email ${email} already taken`);}
-    
-    return await createUserDB(username,password,email);
+    let result = [];
+    if ( ! checkUsernameFormat(username)){
+        result.push(400);
+        result.push('Invalid username format, must be 3-20 alphanumeric characters (accent included)');
+    }
+    else if (await getUserIdFromNameOrEmail(username) != null){
+        result.push(400);
+        result.push('Username already in use !');
+    }
+    else if (! checkEmailFormat(email)) {
+        result.push(400);
+        result.push('Invalid email format');
+    }
+    else if (await getUserIdFromNameOrEmail(email) != null){
+        result.push(400);
+        result.push('Email already in use !');
+    }
+    else if (! checkPasswordFormat(password)) {
+        result.push(400);
+        result.push('Invalid password format, must be 8-64 alphanumeric characters and contain at least one special character');
+    }
+    else {
+        const hashed_password = await hashPassword(password);
+        await createUserDB(username,hashed_password,email);
+        result.push(200,'User register successful ! Please log in.');
+    }
+    return result;
 }
 
 
-function checkPassword(password){
-    return password.test(/^(?=.*[!@#$%^&*()_+|~\-={}\[\]:;"'<>,.?\/])(?=.*[a-zA-Z0-9]).{8,64}$/);
-}
-
-
-function checkUsername(username){
-    return username.test(/^[a-zA-Z0-9_À-ÿ\s]{3,20}$/);
-}
-
-
-function checkEmail(email){
-    return email.test(/^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/);
+async function hashPassword(password) {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    return hashedPassword;
 }

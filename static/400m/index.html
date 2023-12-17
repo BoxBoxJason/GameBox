@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 	<head>
 		<title>400m Olympique</title>
 		<meta charset="utf-8">
+		<link rel="icon" href="/static/resources/images/logos/gamebox_symbol.png" type="image/x-icon">
 		<link rel="stylesheet" type="text/css" href="../resources/css/fonts.css">
 		<link rel="stylesheet" type="text/css" href="./css/about.css">
 		<link rel="stylesheet" type="text/css" href="./css/game.css">
@@ -12,181 +13,196 @@
 		<link rel="stylesheet" type="text/css" href="./css/settings.css">
 	</head>
 	<body>
-		
-		<div style="color:transparent; background-color: transparent; font-size: 40pt; margin: 0 0 10px; padding: 0;">Invisible text</div>
-		<!-- Navigation bar, contains rules, settings and about button -->
-		<div id="topBar">
-			<div id="navBar">
-				<button id="rulesButton">Règles</button>
-				<button id="settingsButton">Paramètres</button>
-				<button id="aboutButton">A propos</button>
-			</div>
-			<h1 id="title">400m Olympique</h1>
-		</div>
+    <header>
+      
+    </header>
+		<main>
+      <div style="color:transparent; background-color: transparent; font-size: 40pt; margin: 0 0 10px; padding: 0;">Invisible text</div>
+      <!-- Navigation bar, contains rules, settings and about button -->
+      <div id="topBar">
+        <div id="navBar">
+          <button id="rulesButton">Règles</button>
+          <button id="settingsButton">Paramètres</button>
+          <button id="aboutButton">A propos</button>
+        </div>
+        <h1 id="title">400m Olympique</h1>
+      </div>
 
-		<div id="startText" style="text-align: center; font-size: 50pt; margin-top: 50px;">
-			<p>Press anything to start</p>
-			<div class="loader-wrapper">
-				<div class="loader"></div>
-			</div>
-		</div>
-		
-		<!-- Rules page, explains how the game works, contains a close button at top right -->
-		<div id="rules" style="display: none;">
-			<img class="close-button" id="closeRules" src="./images/closeTab.png">
-			<h2>Informations sur le jeu</h2>
-			<h3>But du jeu</h3>
-			<p>
-				Le but du jeu est d'avancer le plus loin possible sur la piste de 400m<br>
-				Pour cela, vous disposez de 8 dés au total. Ces 8 dés sont divisés en groupes de 2.<br>
-				Vous avez le droit à 9 lancers.
-			</p>
-			<h3>Comment jouer ?</h3>
-			<p>
-				Lancez les 2 premiers dés. Si vous n'êtes pas satisfait du résultat, ramassez les 2 dés et lancez-les à nouveau.<br>
-				Cette opération peut être répétée plusieurs fois jusqu'à ce que vous soyez satisfait la première série.<br>
-				Procédez ensuite de la même manière pour les deuxième, troisième et quatrième séries.<br>
-			</p>
-			<h3>Décompte des points</h3>
-			<p>
-				Les points sont attribués de la manière suivante:
-			</p>
-				<table>
-					<tr>
-						<th>Dé</th>
-						<td>1</td>
-						<td>2</td>
-						<td>3</td>
-						<td>4</td>
-						<td>5</td>
-						<td>6</td>
-					</tr>
-					<tr>
-						<th>Points</th>
-						<td>+1</td>
-						<td>+2</td>
-						<td>+3</td>
-						<td>+4</td>
-						<td>+5</td>
-						<td>-6</td>
-					</tr>
-					<tr>
-						<th>Distance</th>
-						<td>+10m</td>
-						<td>+20m</td>
-						<td>+30m</td>
-						<td>+40m</td>
-						<td>+50m</td>
-						<td>-60m</td>
-					</tr>
-				</table>
-			<p>
-				Ainsi un lancer de dé rapporte sa valeur exacte en terme de points (10 fois sa valeur en distance)<br>
-				CEPENDANT, un 6 compte négativement contrairement aux autres valeurs ! Il faut donc les éviter à tout prix !
-			</p>
-			<h3>Stratégie</h3>
-			<p>
-				L'espérance mathématiques (sans relance) du jeu est de +3pt par tour.<br>
-				L'espérance mathématiques (avec relance et en supposant qu'on arrive à éviter tous les 6) est de +6.25pt par tour<br>
-				Une stratégie simple et permettant de prendre le risque minimum serait alors d'accepter toutes les valeurs, dès lors qu'elles dépassent 6
-			</p>
-		</div>
-		
-		<!-- Settings page, allows to regulate volume, to change music, to change theme (will maybe add a change in the dices values) -->
-		<div id="settings" style="display: none;">
-			<img class="close-button" id="closeSettings" src="./images/closeTab.png">
-			<h2>Paramètres</h2>
-			<table>
-				<tr>
-					<td>
-						<fieldset>
-							<legend>Musique</legend>
-							<h4>Titre</h4>
-							<p id="musicTitle"></p>
-							<h4>Artiste</h4>
-							<p id="musicAuthor"></p>
-							<h4>Volume</h4>
-							<input type="range" id="musicVolume" min="0" max="1" step="0.01" value="0.2">
-						</fieldset>
-					</td>
-					<td>
-						<fieldset>
-							<legend>Sons</legend>
-							<h4>Volume</h4>
-							<input type="range" id="soundVolume" min="0" max="1" step="0.01" value="0.5">
-						</fieldset>
-					</td>
-					<td>
-						<fieldset>
-							<legend>Visuel</legend>
-							<h4>Thème</h4>
-							<input type="radio" name="theme" checked="checked" id="classicTheme" class="themeButton">
-							<label for="classicTheme">Classique</label>
-							<input type="radio" name="theme" id="darkTheme" class="themeButton">
-							<label for="classicTheme">Sombre</label>
-						</fieldset>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<fieldset>
-							<legend>Jeu</legend>
-							<h4>Nombre de rounds</h4>
-							<input type="number" id="maxRoundsPicker" name="maxRoundsPicker" min="1" max="10" value="4" inputmode="numeric">
-							<h4>Nombre de lancers</h4>
-							<input type="number" id="maxThrowsPicker" name="maxThrowsPicker" min="1" max="25" value="1" inputmode="numeric">
-							<h4>Nombre de dés par round</h4>
-							<input type="number" id="numberDicesPerThrowPicker" name="numberDicesPerThrowPicker" min="1" max="5" value="2" inputmode="numeric">
-						</fieldset>
-					</td>
-					<td>
-						<fieldset>
-							<legend>Dés</legend>
-							<h4>Valeur min dé</h4>
-							<input type="number" id="minDiceValuePicker" name="minDiceValuePicker" min="0" max="19" value="1" inputmode="numeric">
-							<h4>Valeur max dé</h4>
-							<input type="number" id="maxDiceValuePicker" name="maxDiceValuePicker" min="1" max="20" value="6" inputmode="numeric">
-							<h4>Seuil négatif</h4>
-							<input type="number" id="negFloorPicker" name="negFloorPicker" min="1" max="20" value="6" inputmode="numeric">
-						</fieldset>
-					</td>
-				</tr>
-			</table>
-		</div>
-		
-		<!-- About page, contains general informations about the game / the code -->
-		<div id="about" style="display: none;">
-			<img class="close-button" id="closeAbout" src="./images/closeTab.png">
-			<h2>A propos</h2>
-			<p>Auteur: BoxBoxJason</p>
-			<p>Lien: <a href="https://github.com/BoxBoxJason/400m" title="GitHub Repository Link">GitHub Repository</a></p>
-			<p>Inspiration: <a href="https://www.knizia.de/wp-content/uploads/reiner/freebies/Website-Decathlon.pdf" title="PDF Dr. Reiner">Decathlon Dr. Reiner</a></p>
-			<p>Fonctionne entièrement sur un navigateur web (sans serveur) avec html / css / javascript</p>
-		</div>
-		<!-- Game page, contains the visual representation of travelled distance, also contains the area where dices are thrown -->
-		<div id="gameFrame" style="display: none;">
-			
-			<!-- Visual representation of travelled distance -->
-			<div id="fieldArea" class="gameFrame-child">
-				<canvas id="showDistance"></canvas>
-				<p id="gameStatus">Lancers Validés: 0</p>
-				<p id="remainingThrows">Lancers restants: 9</p>
-			</div>
+      <div id="startText" style="text-align: center; font-size: 50pt; margin-top: 50px;">
+        <p>Press anything to start</p>
+        <div class="loader-wrapper">
+          <div class="loader"></div>
+        </div>
+      </div>
+      
+      <!-- Rules page, explains how the game works, contains a close button at top right -->
+      <div id="rules" style="display: none;">
+        <img class="close-button" id="closeRules" src="./images/closeTab.png">
+        <h2>Informations sur le jeu</h2>
+        <h3>But du jeu</h3>
+        <p>
+          Le but du jeu est d'avancer le plus loin possible sur la piste de 400m<br>
+          Pour cela, vous disposez de 8 dés au total. Ces 8 dés sont divisés en groupes de 2.<br>
+          Vous avez le droit à 9 lancers.
+        </p>
+        <h3>Comment jouer ?</h3>
+        <p>
+          Lancez les 2 premiers dés. Si vous n'êtes pas satisfait du résultat, ramassez les 2 dés et lancez-les à nouveau.<br>
+          Cette opération peut être répétée plusieurs fois jusqu'à ce que vous soyez satisfait la première série.<br>
+          Procédez ensuite de la même manière pour les deuxième, troisième et quatrième séries.<br>
+        </p>
+        <h3>Décompte des points</h3>
+        <p>
+          Les points sont attribués de la manière suivante:
+        </p>
+          <table>
+            <tr>
+              <th>Dé</th>
+              <td>1</td>
+              <td>2</td>
+              <td>3</td>
+              <td>4</td>
+              <td>5</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <th>Points</th>
+              <td>+1</td>
+              <td>+2</td>
+              <td>+3</td>
+              <td>+4</td>
+              <td>+5</td>
+              <td>-6</td>
+            </tr>
+            <tr>
+              <th>Distance</th>
+              <td>+10m</td>
+              <td>+20m</td>
+              <td>+30m</td>
+              <td>+40m</td>
+              <td>+50m</td>
+              <td>-60m</td>
+            </tr>
+          </table>
+        <p>
+          Ainsi un lancer de dé rapporte sa valeur exacte en terme de points (10 fois sa valeur en distance)<br>
+          CEPENDANT, un 6 compte négativement contrairement aux autres valeurs ! Il faut donc les éviter à tout prix !
+        </p>
+        <h3>Stratégie</h3>
+        <p>
+          L'espérance mathématiques (sans relance) du jeu est de +3pt par tour.<br>
+          L'espérance mathématiques (avec relance et en supposant qu'on arrive à éviter tous les 6) est de +6.25pt par tour<br>
+          Une stratégie simple et permettant de prendre le risque minimum serait alors d'accepter toutes les valeurs, dès lors qu'elles dépassent 6
+        </p>
+      </div>
+      
+      <!-- Settings page, allows to regulate volume, to change music, to change theme (will maybe add a change in the dices values) -->
+      <div id="settings" style="display: none;">
+        <img class="close-button" id="closeSettings" src="./images/closeTab.png">
+        <h2>Paramètres</h2>
+        <table>
+          <tr>
+            <td>
+              <fieldset>
+                <legend>Musique</legend>
+                <h4>Titre</h4>
+                <p id="musicTitle"></p>
+                <h4>Artiste</h4>
+                <p id="musicAuthor"></p>
+                <h4>Volume</h4>
+                <input type="range" id="musicVolume" min="0" max="1" step="0.01" value="0.2">
+              </fieldset>
+            </td>
+            <td>
+              <fieldset>
+                <legend>Sons</legend>
+                <h4>Volume</h4>
+                <input type="range" id="soundVolume" min="0" max="1" step="0.01" value="0.5">
+              </fieldset>
+            </td>
+            <td>
+              <fieldset>
+                <legend>Visuel</legend>
+                <h4>Thème</h4>
+                <input type="radio" name="theme" checked="checked" id="classicTheme" class="themeButton">
+                <label for="classicTheme">Classique</label>
+                <input type="radio" name="theme" id="darkTheme" class="themeButton">
+                <label for="classicTheme">Sombre</label>
+              </fieldset>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <fieldset>
+                <legend>Jeu</legend>
+                <h4>Nombre de rounds</h4>
+                <input type="number" id="maxRoundsPicker" name="maxRoundsPicker" min="1" max="10" value="4" inputmode="numeric">
+                <h4>Nombre de lancers</h4>
+                <input type="number" id="maxThrowsPicker" name="maxThrowsPicker" min="1" max="25" value="1" inputmode="numeric">
+                <h4>Nombre de dés par round</h4>
+                <input type="number" id="numberDicesPerThrowPicker" name="numberDicesPerThrowPicker" min="1" max="5" value="2" inputmode="numeric">
+              </fieldset>
+            </td>
+            <td>
+              <fieldset>
+                <legend>Dés</legend>
+                <h4>Valeur min dé</h4>
+                <input type="number" id="minDiceValuePicker" name="minDiceValuePicker" min="0" max="19" value="1" inputmode="numeric">
+                <h4>Valeur max dé</h4>
+                <input type="number" id="maxDiceValuePicker" name="maxDiceValuePicker" min="1" max="20" value="6" inputmode="numeric">
+                <h4>Seuil négatif</h4>
+                <input type="number" id="negFloorPicker" name="negFloorPicker" min="1" max="20" value="6" inputmode="numeric">
+              </fieldset>
+            </td>
+          </tr>
+        </table>
+      </div>
+      
+      <!-- About page, contains general informations about the game / the code -->
+      <div id="about" style="display: none;">
+        <img class="close-button" id="closeAbout" src="./images/closeTab.png">
+        <h2>A propos</h2>
+        <p>Auteur: BoxBoxJason</p>
+        <p>Lien: <a href="https://github.com/BoxBoxJason/400m" title="GitHub Repository Link">GitHub Repository</a></p>
+        <p>Inspiration: <a href="https://www.knizia.de/wp-content/uploads/reiner/freebies/Website-Decathlon.pdf" title="PDF Dr. Reiner">Decathlon Dr. Reiner</a></p>
+        <p>Fonctionne entièrement sur un navigateur web (sans serveur) avec html / css / javascript</p>
+      </div>
+      <!-- Game page, contains the visual representation of travelled distance, also contains the area where dices are thrown -->
+      <div id="gameFrame" style="display: none;">
+        
+        <!-- Visual representation of travelled distance -->
+        <div id="fieldArea" class="gameFrame-child">
+          <canvas id="showDistance"></canvas>
+          <p id="gameStatus">Lancers Validés: 0</p>
+          <p id="remainingThrows">Lancers restants: 9</p>
+        </div>
 
-			<!-- Visual representation of dices and game advancement -->
-			<div id="playArea" class="gameFrame-child">
-				<div class="gameButtons">
-					<button title="Lancer" class="gameButton" type="button" id="throwButton"><img class="button-icon" src="./images/throwIcon.png" alt="Throw Icon"></button>
-					<button title="Garder" class="gameButton" type="button" id="keepButton"><img class="button-icon" src="./images/keepIcon.png" alt="Keep Icon"></button>
-				</div>
-				<div id="diceArea" style="display: flex;"></div>
-				<p>Historique des lancers:</p>
-				<div id="historyArea"></div>
-			</div>
-		</div>
-
+        <!-- Visual representation of dices and game advancement -->
+        <div id="playArea" class="gameFrame-child">
+          <div class="gameButtons">
+            <button title="Lancer" class="gameButton" type="button" id="throwButton"><img class="button-icon" src="./images/throwIcon.png" alt="Throw Icon"></button>
+            <button title="Garder" class="gameButton" type="button" id="keepButton"><img class="button-icon" src="./images/keepIcon.png" alt="Keep Icon"></button>
+          </div>
+          <div id="diceArea" style="display: flex;"></div>
+          <p>Historique des lancers:</p>
+          <div id="historyArea"></div>
+        </div>
+      </div>
+    
 		<!-- Music player and js script -->
-		<audio id="musicPlayer" controls style="display: none;"></audio>
-		<script type="module" src="./js/400m.js"></script>
+		  <audio id="musicPlayer" controls style="display: none;"></audio>
+		  <script type="module" src="./js/400m.js"></script>
+    </main>
+    <footer>
+      <p style="font-weight: bold; text-transform: uppercase;">Thanks for using GameBox !</p>
+      <table class="links">
+        <tr>
+          <td><a href="https://github.com/BoxBoxJason/GameBox"><img src="../resources/images/logos/github.png" title="Go to GameBox GitHub"></a></td>
+          <td><a href="https://www.linkedin.com/in/lo%C3%AFck-goupil-hallay-710619245/"><img src="../resources/images/logos/linkedin.png" title="Go to author LinkedIn"></a></td>
+        </tr>
+      </table>
+      <p>Developped by <a href="https://github.com/BoxBoxJason">@BoxBoxJason</a></p>
+      <p>Designs and logos by <a href="https://github.com/BoxBoxJason">@BoxBoxJason</a></p>
+    </footer>
 	</body>
 </html>

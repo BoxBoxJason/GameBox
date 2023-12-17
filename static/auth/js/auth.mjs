@@ -7,6 +7,9 @@
  * author: BoxBoxJason
  */
 
+import { checkEmailFormat, checkPasswordFormat, checkUsernameFormat } from "../../resources/js/credentialsChecks.mjs";
+
+
 // Form switch listeners
 document.getElementById('login_switch').addEventListener('click', () => {
     switchForm(document.getElementById('login_form'),document.getElementById('login_switch'),document.getElementById('register_form'),document.getElementById('register_switch'));
@@ -16,14 +19,22 @@ document.getElementById('register_switch').addEventListener('click', () => {
 });
 
 // Form submit buttons
-document.getElementById('submit_register').addEventListener('submit', async function(event){
+document.getElementById('register_form').addEventListener('submit', async function(event){
     event.preventDefault();
     await onRegister();
 });
-document.getElementById('submit_login').addEventListener('submit', async function(event) {
+document.getElementById('login_form').addEventListener('submit', async function(event) {
     event.preventDefault();
     await onLogin();
 });
+
+function switchForm(visible_form,visible_switch,invisible_form,invisible_switch) {
+    invisible_form.style.display = 'none';
+    invisible_switch.style.borderColor = '#aaa';
+    visible_form.style.display = 'block';
+    visible_switch.style.borderColor = '#269bed';
+    document.getElementById('alert_section').style.display = 'none';
+}
 
 
 async function onLogin(){
@@ -32,62 +43,74 @@ async function onLogin(){
         password: document.getElementById('password_login').value
     }
 
-    try {
-        const response = await fetch('/auth/login', {
+    const response = await fetch('/auth/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(form_data)
+    });
+
+    if (response.ok) {
+        window.location.href = '/';
+    }
+    else {
+      const response_json = await response.json();
+      displayAlertMessage(response_json.message);
+    }
+}
+
+
+async function onRegister(){
+    const username = document.getElementById('username_register').value;
+    const email = document.getElementById('email_register').value;
+    const password1 = document.getElementById('password_register').value;
+    const password2 = document.getElementById('password_register_confirmation').value;
+
+    if (! checkUsernameFormat(username)){displayAlertMessage('Invalid username format, must be 3-20 alphanumeric characters (accent included)');}
+    if (! checkEmailFormat(email)){displayAlertMessage('Invalid email format');}
+    if (! checkPasswordFormat(password1)){displayAlertMessage('Invalid password format, must be 8-64 alphanumeric characters and contain at least one special character');}
+    else if (password1 != password2){displayAlertMessage('Passwords do not match !');}
+    else {
+        const form_data = {
+            'username': username,
+            password: password1,
+            'email': email
+        }
+
+        const response = await fetch('/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(form_data)
         });
-    }
-    catch {
-        alert('Failed backend call to login');
-    }
-}
 
+        const response_json = await response.json();
 
-async function onRegister(){
-    let password1 = document.getElementById('password_register').value;
-    let password2 = document.getElementById('confirm_password_register').value;
-
-    if (! checkPassword(password1)){
-        alert('Password is invalid ! Make sure it is between 8-64 characters, with one special character and alphanumeric characters');
-    }
-    else if (password1 != password2){
-        alert('Passwords do not match !');
-    }
-    else{
-        const form_data = {
-            username: document.getElementById('username_register').value,
-            password: password1,
-            email: document.getElementById('email_register').value
+        if(response.ok) {
+            displaySuccessMessage(response_json.message);
+            switchForm(document.getElementById('login_form'),document.getElementById('login_switch'),document.getElementById('register_form'),document.getElementById('register_switch'));
         }
-
-        try {
-            const response = await fetch('/auth/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(form_data)
-            });
-        }
-        catch {
-            alert('Failed backend call to create user');
+        else {
+            displayAlertMessage(response_json.message);
         }
     }
 }
 
 
-function checkPassword(password){
-    return password.test(/^(?=.*[!@#$%^&*()_+|~\-={}\[\]:;"'<>,.?\/])(?=.*[a-zA-Z0-9]).{8,64}$/);
+function displayAlertMessage(message) {
+    const alert_section = document.getElementById('alert_section');
+    alert_section.classList.remove('success','fail');
+    alert_section.classList.add('fail');
+    alert_section.innerHTML = message;
+    alert_section.style.display = 'block';
 }
 
-
-function switchForm(visible_form,visible_switch,invisible_form,invisible_switch) {
-    invisible_form.style.display = 'none';
-    invisible_switch.style.borderColor = '#aaa';
-    visible_form.style.display = 'block';
-    visible_switch.style.borderColor = '#269bed';
+function displaySuccessMessage(message) {
+    const alert_section = document.getElementById('alert_section');
+    alert_section.classList.remove('success','fail');
+    alert_section.classList.add('success');
+    alert_section.innerHTML = message;
+    alert_section.style.display = 'block';
 }

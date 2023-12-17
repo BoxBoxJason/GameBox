@@ -2,23 +2,29 @@ import { Router } from 'express';
 import { join } from 'path';
 import { generateStartingPoint, throwDices } from '../middlewares/games.mjs';
 import { static_folder_path } from '../constants.mjs';
+import { getAllTableRows } from '../models/models.mjs';
 
 const games_router = Router();
 
 // ### ALL GAMES ###
-games_router.get('/games/400m/musics_files_names/:game_name', (req, res) => {
+games_router.get('/musics_files_names/:game_name', (req, res) => {
     const game_name = req.params.game_name.toString();
-    const musics_folder_path = join(static_folder_path,'frontend',game_name,'musics');
+    const musics_folder_path = join(static_folder_path,game_name,'musics');
 
     const files = fs.readdirSync(musics_folder_path).map(file => join(musics_folder_path,file));
     res.json({ files });
 });
 
 
+games_router.get('/get-all', async function(req,res){
+    res.json(await getAllTableRows('Games'));
+});
+
+
 games_router.get('/scores/:game_id', (req,res) => {
     const { game_id } = req.params;
 
-} );
+});
 
 // ### PONG ###
 const pong_router = Router();

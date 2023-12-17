@@ -1,6 +1,8 @@
 import { connectDB } from '../controllers/databaseController.mjs'
+
+
 export async function createTableRow(table_name,columns_names,columns_values){
-    let db = connectDB();
+    let db = await connectDB();
     
     let query = db.prepare(`INSERT INTO ${table_name} (${columns_names.join(',')}) VALUES (${columns_values.map(() => '?').join(',')})`);
     
@@ -21,16 +23,15 @@ export async function createTableRow(table_name,columns_names,columns_values){
 
 
 export async function getTableRowIdMatchingColumnValue(table_name,column_name,column_value){
-    let db = connectDB();
-
+    let db = await connectDB();
     return new Promise((resolve,reject) => {
-        db.get(`SELECT "id" FROM ${table_name} WHERE ${column_name} = ?`,[row_id],(err,row) =>{
+        db.get(`SELECT "id" FROM ${table_name} WHERE ${column_name} = ?`,[column_value],(err,row) =>{
             db.close();
             if (err){
                 reject(err);
             }
             else{
-                resolve(row ? row[column_name] : null);
+                resolve(row ? Object.values(row)[0] : null);
             }
         });
     });
@@ -38,16 +39,15 @@ export async function getTableRowIdMatchingColumnValue(table_name,column_name,co
 
 
 export async function getTableRowColumn(table_name,column_name,row_id) {
-    let db = connectDB();
+    let db = await connectDB();
     
     return new Promise((resolve, reject) => {
         db.get(`SELECT ${column_name} FROM ${table_name} WHERE "id" = ?`,[row_id],(err,row) =>{
-            db.close();
             if (err){
                 reject(err);
             }
             else{
-                resolve(row ? row[column_name] : null);
+                resolve(row ? Object.values(row)[0] : null);
             }
         });
     });
@@ -55,10 +55,10 @@ export async function getTableRowColumn(table_name,column_name,row_id) {
 
 
 export async function getTableRowColumns(table_name,columns_names,row_id){
-    let db = connectDB();
+    let db = await connectDB();
 
     return new Promise((resolve,reject) => {
-        db.get(`SELECT ${columns_names.join(',')} FROM ${table_name} WHERE "id" = ?`, [row_id], (err,rows) => {
+        db.get(`SELECT ${columns_names.join(',')} FROM ${table_name} WHERE "id" = ?`, [row_id], (err,row) => {
             db.close();
             if (err){
                 reject(err);
@@ -72,7 +72,7 @@ export async function getTableRowColumns(table_name,columns_names,row_id){
 
 
 export async function deleteTableRowMatchingColumns(table_name,columns_names,columns_values) {
-    let db = connectDB();
+    let db = await connectDB();
 
     let query = db.prepare(`DELETE FROM ${table_name} WHERE ${columns_names.map(column_name => `${column_name} = ?`).join(' AND ')}`)
     return new Promise((resolve,reject) => {
@@ -90,8 +90,8 @@ export async function deleteTableRowMatchingColumns(table_name,columns_names,col
 }
 
 
-export function editTableRowColumn(table_name,row_id,column_name,column_value){
-    let db = connectDB();
+export async function editTableRowColumn(table_name,row_id,column_name,column_value){
+    let db = await connectDB();
     let query = db.prepare(`UPDATE ${table_name} SET ${column_name} = ? WHERE "id" = ?`);
 
     return new Promise((resolve,reject) => {
@@ -104,6 +104,22 @@ export function editTableRowColumn(table_name,row_id,column_name,column_value){
             }
             else{
                 resolve(true);
+            }
+        });
+    });
+}
+
+
+export async function getAllTableRows(table_name){
+    let db = await connectDB();
+
+    return new Promise((resolve, reject) => {
+        const query = `SELECT * FROM ${table_name}`;
+        db.all(query, [], (err, rows) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(rows);
             }
         });
     });
