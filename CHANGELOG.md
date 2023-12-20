@@ -1,5 +1,22 @@
 # GameBox CHANGELOG
 
+## GameBox V1.0.3 400M RELEASE (20/12/2023)
+
+### New Features
+- Added header (navigation bar) and footer (credits) to every page
+- Released Profile page
+- Released 400m minigame
+- Released API
+
+### Fixes
+- Fixed register / login / logout buttons, forms, submits
+- Humongous rework of backend route calls
+
+### TODO
+1. Implement score tracking
+2. Implement time spent tracker
+3. Implement new games
+
 ## GameBox V1.0.2 SESSIONS RELEASE (13/12/2023)
 
 ### New Features

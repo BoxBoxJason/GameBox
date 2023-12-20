@@ -16,9 +16,9 @@
       <nav>
         <ul>
           <li><a href="/"><img src="../resources/images/logos/gamebox.png" alt="GameBox logo" title="Go to home page"></a></li>
-          <li><a href="/games" title="Go to games" class="nav_bar_child" title="Go to game selection">Games</a></li>
-          <li><a href="/scores" title="Go to scores" class="nav_bar_child" title="Go to score leaderboard">Scores</a></li>
-          <li><a href="/about" title="Go to about" class="nav_bar_child" title="Go to About">About</a></li>
+          <li><div class="nav_bar_child" onclick="window.location.href = '/games'" title="Go to game selection">Games</div></li>
+          <li><div class="nav_bar_child" onclick="window.location.href = '/score'" title="Go to leaderboard">Scores</div></li>
+          <li><div class="nav_bar_child" onclick="window.location.href = '/about'" title="Go to about">About</div></li>
           <li>
             <a href="/auth" id="nav_bar_avatar_ref"><img id="nav_bar_avatar" src="../resources/images/avatars/default.png" alt="Player avatar" title="Go to profile"></a>
             <div id="profile_dropdown">
@@ -29,33 +29,7 @@
           </li>
         </ul>
       </nav>
-      <script>
-        fetch('/auth/getAvatar')
-        .then(response => response.json())
-        .then(avatar => {
-            if (avatar != null) {
-                document.getElementById('nav_bar_avatar').src = `../resources/images/avatars/${avatar.avatar}`;
-                document.getElementById('nav_bar_avatar_ref').href = '';
-                document.getElementById('logout_button').style.display = 'block';
-                const profile_form = document.getElementById('profile_form');
-                profile_form.action = '/profile';
-                profile_form.method = 'POST';
-                document.getElementById('profile_button').innerHTML = 'Profile';
-            }
-            else {
-                document.getElementById('nav_bar_avatar').src = `../resources/images/avatars/default.png`;
-                document.getElementById('nav_bar_avatar_ref').href = '/auth';
-                document.getElementById('logout_button').style.display = 'none';
-                const profile_form = document.getElementById('profile_form');
-                profile_form.action = '/auth';
-                profile_form.method = 'GET';
-                document.getElementById('profile_button').innerHTML = 'Log in';
-            }
-        })
-        .catch(error => {
-          console.error('Could not fetch username and avatar for this session',error);
-        });
-      </script>
+      <script src="../resources/js/nav_bar.mjs"></script>
     </header>
 
     <main>

@@ -3,10 +3,13 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 dotenv.config();
-import games_router from './backend/routes/games.mjs';
-import { static_folder_path } from './backend/constants.mjs';
+import { static_dir_path } from './backend/constants.mjs';
 import { initDatabase } from './backend/controllers/databaseController.mjs';
+import games_router from './backend/routes/games.mjs';
 import auth_router from './backend/routes/auth.mjs';
+import user_router from './backend/routes/user.mjs';
+import static_router from './backend/routes/static.mjs';
+import api_router from './backend/api/api.mjs';
 
 // ### EXPRESS SETUP ###
 const app = express();
@@ -23,16 +26,14 @@ app.use(session({
 }));
 
 // ### ROUTES ###
-app.use("/static", express.static(static_folder_path));
-
-app.get('/', (req, res) => {
-    res.redirect(301, '/static/home/index.html');
-});
-
+app.use("/static", express.static(static_dir_path));
+app.use(static_router);
 app.use('/games',games_router);
-
 app.use('/auth',auth_router);
+app.use('user',user_router);
+app.use('api',api_router);
 
+// ### DATABASE ###
 await initDatabase();
 
 // ### HOSTING ###

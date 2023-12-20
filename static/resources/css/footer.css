@@ -2,6 +2,7 @@ footer {
   background-color: #302f29;
   color: #fff;
   padding: 10px 0;
+  margin-top: 50px;
 }
 
 footer .links {
@@ -28,4 +29,8 @@ footer p {
   text-align: center;
   margin: auto;
   font-size: 10pt;
+}
+
+footer p a {
+  color: #fff;
 }

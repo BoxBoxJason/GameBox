@@ -6,14 +6,33 @@
 		<meta charset="utf-8">
 		<title>Pong</title>
 		<link rel="icon" href="/static/resources/images/logos/gamebox_symbol.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../resources/css/nav_bar.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/footer.css">
 		<link rel="stylesheet" type="text/css" href="../resources/css/fonts.css">
 		<link rel="stylesheet" type="text/css" href="./css/pong.css">
 	</head>
 	
 	<body>
     <header>
-
+      <nav>
+        <ul>
+          <li><a href="/"><img src="../resources/images/logos/gamebox.png" alt="GameBox logo" title="Go to home page"></a></li>
+          <li><div class="nav_bar_child" onclick="window.location.href = '/games'" title="Go to game selection">Games</div></li>
+          <li><div class="nav_bar_child" onclick="window.location.href = '/score'" title="Go to leaderboard">Scores</div></li>
+          <li><div class="nav_bar_child" onclick="window.location.href = '/about'" title="Go to about">About</div></li>
+          <li>
+            <a href="/auth" id="nav_bar_avatar_ref"><img id="nav_bar_avatar" src="../resources/images/avatars/default.png" alt="Player avatar" title="Go to profile"></a>
+            <div id="profile_dropdown">
+              <form id="profile_form" action="/auth"><button type="submit" class="profile_dropdown_option" id="profile_button">Log In</button></form>
+              <form action="/auth/logout" method="POST"><button type="submit" class="profile_dropdown_option" id="logout_button">Log Out</button></form>
+              
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <script src="../resources/js/nav_bar.mjs"></script>
     </header>
+
     <main>
       <div class="gameContainer">
         <div id="gameFrame">

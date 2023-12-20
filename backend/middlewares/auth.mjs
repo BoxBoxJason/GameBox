@@ -1,19 +1,34 @@
 import bcrypt from 'bcrypt';
-import { getTableRowColumn } from "../models/models.mjs";
 import { createUserDB, getUserIdFromNameOrEmail } from "../models/users.mjs"
 import { checkEmailFormat, checkPasswordFormat, checkUsernameFormat } from "../../static/resources/js/credentialsChecks.mjs";
 
 
+/**
+ * Checks if username or email given corresponds to registered password.
+ * @param {string} username_or_email - Username or email
+ * @param {string} attempt_password - Password attempt
+ * @returns {Promise<boolean>} - Indicates if password matches or not
+ */
 export async function checkUserPassword(username_or_email,attempt_password) {
-    let password_matches = false;
     const user_id = await getUserIdFromNameOrEmail(username_or_email);
-    if (user_id != null){
+    return await checkUserPasswordFromId(user_id,attempt_password);
+}
+
+
+/**
+ * Checks if user id given corresponds to registered password.
+ * @param {number} user_id 
+ * @param {string} attempt_password 
+ * @returns {Promise<boolean>} - Indicates if password matches or not
+ */
+export async function checkUserPasswordFromId(user_id,attempt_password) {
+    let password_matches = false;
+    if (user_id != null) {
         let user_password_hash = await getTableRowColumn('Users','"password"',user_id);
         if (user_password_hash != null) {
             password_matches = bcrypt.compare(attempt_password,user_password_hash);
         }
     }
-
     return password_matches;
 }
 

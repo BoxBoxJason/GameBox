@@ -4,16 +4,16 @@
   font-family: "Barlow";
 }
 
-.auth_widget {
+main .auth_widget {
   width: 340px;
   margin: 50px auto 0;
 }
 
-table {
+main table {
   margin: 0 auto 5px;
 }
 
-table tr td {
+main table tr td {
   border-bottom: 2px solid #aaa;
   padding-bottom: 5px;
   border-radius: 4px;
@@ -22,7 +22,7 @@ table tr td {
 }
 
 
-form {
+main form {
   background-color: #aaa;
   border: 2px inset #000;
   margin: auto;
@@ -31,7 +31,7 @@ form {
 }
 
 
-.form-section {
+main .form-section {
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -39,12 +39,12 @@ form {
 }
 
 
-label {
+main label {
   font-size: 13pt;
 }
 
 
-input[type="text"], input[type="email"], input[type="password"]{
+main input[type="text"],main input[type="email"],main input[type="password"]{
   text-align: center;
   width: 200px;
   height: 25px;
@@ -52,7 +52,7 @@ input[type="text"], input[type="email"], input[type="password"]{
   font-size: 13pt;
 }
 
-input[type="submit"] {
+main input[type="submit"] {
   text-align: center;
   height: 30px;
   margin: 0 auto 8px;
@@ -62,7 +62,7 @@ input[type="submit"] {
   text-transform: uppercase;
 }
 
-#alert_section {
+main #alert_section {
   padding: 8px 20px;
   margin: 30px auto 0;
   width: 350px;
@@ -71,12 +71,12 @@ input[type="submit"] {
   align-items: center;
 }
 
-#alert_section.fail {
+main #alert_section.fail {
   border: 4px groove #c20a0a;
   background-color: #d68787;
 }
 
-#alert_section.success {
+main #alert_section.success {
   border: #0b8700;
   background-color: #b2edad;
 }

@@ -17,6 +17,9 @@ nav ul li {
   align-items: center;
   padding: 0 10px;
   height: 100%;
+  color: #fff;
+  font-size: 13pt;
+  cursor: pointer;
 }
 
 nav ul li:first-child img{
@@ -34,23 +37,17 @@ nav ul li:last-child:hover #profile_dropdown {
   display: block;
 }
 
-nav ul li a {
-  text-decoration: none;
-  color: #fff;
-  font-size: 13pt;
-}
-
 nav ul li:not(:first-child):hover {
   background-color: #b30774;
 }
 
-#nav_bar_avatar {
+nav #nav_bar_avatar {
   height: 32px;
   width: auto;
   right: 0;
 }
 
-#profile_dropdown {
+nav #profile_dropdown {
   display: none;
   position: absolute;
   height: fit-content;
@@ -61,18 +58,18 @@ nav ul li:not(:first-child):hover {
   text-align: left;
 }
 
-.profile_dropdown_option {
+nav .profile_dropdown_option {
   padding: 5px;
   font-size: 11pt;
   background-color: #5e5c50;
   width: 100%;
 }
 
-.profile_dropdown_option:hover {
+nav .profile_dropdown_option:hover {
   background-color: #b30774;
 }
 
-#logout_div {
+nav #logout_div {
   padding-top: 0;
   display: none;
 }
