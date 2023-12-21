@@ -1,18 +1,7 @@
 import bcrypt from 'bcrypt';
-import { createUserDB, getUserIdFromNameOrEmail } from "../models/users.mjs"
+import { createUserDB, getUserIdFromEmail, getUserIdFromUsername } from "../models/users.mjs"
 import { checkEmailFormat, checkPasswordFormat, checkUsernameFormat } from "../../static/resources/js/credentialsChecks.mjs";
-
-
-/**
- * Checks if username or email given corresponds to registered password.
- * @param {string} username_or_email - Username or email
- * @param {string} attempt_password - Password attempt
- * @returns {Promise<boolean>} - Indicates if password matches or not
- */
-export async function checkUserPassword(username_or_email,attempt_password) {
-    const user_id = await getUserIdFromNameOrEmail(username_or_email);
-    return await checkUserPasswordFromId(user_id,attempt_password);
-}
+import { getTableRowColumnsFromId } from '../models/models.mjs';
 
 
 /**
@@ -24,9 +13,9 @@ export async function checkUserPassword(username_or_email,attempt_password) {
 export async function checkUserPasswordFromId(user_id,attempt_password) {
     let password_matches = false;
     if (user_id != null) {
-        let user_password_hash = await getTableRowColumn('Users','"password"',user_id);
-        if (user_password_hash != null) {
-            password_matches = bcrypt.compare(attempt_password,user_password_hash);
+        const user_password_hash = await getTableRowColumnsFromId('Users',user_id,['password']);
+        if (user_password_hash.hasOwnProperty('password')) {
+            password_matches = bcrypt.compare(attempt_password,user_password_hash.password);
         }
     }
     return password_matches;
@@ -39,7 +28,7 @@ export async function createUser(username,password,email) {
         result.push(400);
         result.push('Invalid username format, must be 3-20 alphanumeric characters (accent included)');
     }
-    else if (await getUserIdFromNameOrEmail(username) != null){
+    else if (await getUserIdFromUsername(username) != null){
         result.push(400);
         result.push('Username already in use !');
     }
@@ -47,7 +36,7 @@ export async function createUser(username,password,email) {
         result.push(400);
         result.push('Invalid email format');
     }
-    else if (await getUserIdFromNameOrEmail(email) != null){
+    else if (await getUserIdFromEmail(email) != null){
         result.push(400);
         result.push('Email already in use !');
     }

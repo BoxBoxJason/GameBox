@@ -5,10 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import { static_dir_path } from './backend/constants.mjs';
 import { initDatabase } from './backend/controllers/databaseController.mjs';
-import games_router from './backend/routes/games.mjs';
-import auth_router from './backend/routes/auth.mjs';
-import user_router from './backend/routes/user.mjs';
-import static_router from './backend/routes/static.mjs';
+import static_router from './backend/api/static.mjs';
 import api_router from './backend/api/api.mjs';
 
 // ### EXPRESS SETUP ###
@@ -28,13 +25,10 @@ app.use(session({
 // ### ROUTES ###
 app.use("/static", express.static(static_dir_path));
 app.use(static_router);
-app.use('/games',games_router);
-app.use('/auth',auth_router);
-app.use('user',user_router);
-app.use('api',api_router);
+app.use('/api',api_router);
 
 // ### DATABASE ###
-await initDatabase();
+initDatabase();
 
 // ### HOSTING ###
 const hostname = 'localhost';

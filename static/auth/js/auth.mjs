@@ -28,6 +28,13 @@ document.getElementById('login_form').addEventListener('submit', async function(
     await onLogin();
 });
 
+/**
+ * Switches between login and register forms
+ * @param {HTMLElement} visible_form 
+ * @param {HTMLElement} visible_switch 
+ * @param {HTMLElement} invisible_form 
+ * @param {HTMLElement} invisible_switch 
+ */
 function switchForm(visible_form,visible_switch,invisible_form,invisible_switch) {
     invisible_form.style.display = 'none';
     invisible_switch.style.borderColor = '#aaa';
@@ -36,14 +43,16 @@ function switchForm(visible_form,visible_switch,invisible_form,invisible_switch)
     document.getElementById('alert_section').style.display = 'none';
 }
 
-
+/**
+ * Actions performed when user clicks on login button
+ */
 async function onLogin(){
     const form_data = {
         username_or_email: document.getElementById('username_email_login').value,
         password: document.getElementById('password_login').value
     }
 
-    const response = await fetch('/auth/login', {
+    const response = await fetch('/api/users/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -51,16 +60,17 @@ async function onLogin(){
         body: JSON.stringify(form_data)
     });
 
-    if (response.ok) {
+    if (!response.ok) {
+        const response_json = await response.json();
+        displayAlertMessage(response_json.message);
+    } else {
         window.location.href = '/';
-    }
-    else {
-      const response_json = await response.json();
-      displayAlertMessage(response_json.message);
     }
 }
 
-
+/**
+ * Actions performed when user clicks on register button
+ */
 async function onRegister(){
     const username = document.getElementById('username_register').value;
     const email = document.getElementById('email_register').value;
@@ -78,7 +88,7 @@ async function onRegister(){
             'email': email
         }
 
-        const response = await fetch('/auth/register', {
+        const response = await fetch('/api/users/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -98,7 +108,10 @@ async function onRegister(){
     }
 }
 
-
+/**
+ * Displays an alert message
+ * @param {string} message 
+ */
 function displayAlertMessage(message) {
     const alert_section = document.getElementById('alert_section');
     alert_section.classList.remove('success','fail');
@@ -107,6 +120,10 @@ function displayAlertMessage(message) {
     alert_section.style.display = 'block';
 }
 
+/**
+ * Displays a success message
+ * @param {string} message 
+ */
 function displaySuccessMessage(message) {
     const alert_section = document.getElementById('alert_section');
     alert_section.classList.remove('success','fail');

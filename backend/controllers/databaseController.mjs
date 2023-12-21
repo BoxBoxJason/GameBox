@@ -1,15 +1,21 @@
 import sqlite3 from 'sqlite3';
 import { db_path } from '../constants.mjs';
 
-
+/**
+ * Initialize the database
+ */
 export async function initDatabase() {
     const db = await connectDB();
     createTables(db);
+    await checkUsersTable(db);
     db.close();
     console.log('Database healthy and up');
 }
 
-
+/**
+ * Connect to the database
+ * @returns {Promise<sqlite3.Database>}
+ */
 export async function connectDB() {
     return new Promise((resolve, reject) => {
         const db = new sqlite3.Database(db_path, (err) => {
@@ -22,9 +28,12 @@ export async function connectDB() {
     });
 }
 
-
+/**
+ * Create the tables if they don't exist
+ * @param {sqlite3.Database} db 
+ */
 async function createTables(db) {
-    await db.run(`
+    db.run(`
         CREATE TABLE IF NOT EXISTS Users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username VARCHAR(32) UNIQUE NOT NULL,
@@ -55,7 +64,9 @@ async function createTables(db) {
     );
 }
 
-
+/**
+ * Creates the default games if they don't exist
+ */
 async function createGames() {
     const default_games = [
         {'slug':'Pong','illustration':'pong.png','description':``,'rules':``,'about':``},
@@ -69,13 +80,15 @@ async function createGames() {
     ]
 }
 
-
+/**
+ * Checks if the Users table exists and displays its content
+ * @param {sqlite3.Database} db 
+ */
 async function checkUsersTable(db){
     db.all('SELECT * FROM Users', [], (err, rows) => {
         if (err) {
             console.error(err.message);
-        }
-        else {
+        } else {
             rows.forEach((row) => {
             console.log(row);
             });

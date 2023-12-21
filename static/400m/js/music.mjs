@@ -8,7 +8,7 @@
  */
 
 export function shuffleMusics() {
-	fetch('/musics_files_names')
+	fetch('/api/games/musics_files_paths/400m')
     .then(response => response.json())
     .then(data => {
         const musicFiles = data.files;

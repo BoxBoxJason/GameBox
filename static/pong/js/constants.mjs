@@ -13,3 +13,6 @@ export const paddle1 = document.getElementById("paddle1");
 export const paddle2 = document.getElementById("paddle2");
 // Ball
 export const ball = document.getElementById("ball");
+
+// Number of rebounds before speed increase
+export const number_rebounds_speed_increase = 7;

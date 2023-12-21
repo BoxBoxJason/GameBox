@@ -8,14 +8,13 @@
  */
 
 export async function fillGamesDisplay(container) {
-    const response = await fetch('/games/get-all');
+    const response = await fetch('/api/games?slug&illustration');
     if (response.ok) {
         const games_data = await response.json();
         games_data.array.forEach(game_dict => {
-            container.appendChild(createGameMiniature(game_dict['"slug"'],game_dict['"illustration"']));
+            container.appendChild(createGameMiniature(game_dict['slug'],game_dict['illustration']));
         });
-    }
-    else {
+    } else {
         console.warn('Could not retrieve games data from database');
     }
 }

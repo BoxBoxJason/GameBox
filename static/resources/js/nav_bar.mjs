@@ -1,35 +1,36 @@
 /* JavaScript FRONT
- * Project: 
- * Package:
- * Module:
- * Usage: 
- * Date: 
+ * Project: GameBox
+ * Package: resources
+ * Module: nav_bar
+ * Usage: Front end management of nav bar.
+ * Date: 18/12/2023
  * author: BoxBoxJason
  */
 
 
-fetch('/auth/getAvatar')
-.then(response => response.json())
-.then(avatar => {
-    if (avatar != null) {
-        document.getElementById('nav_bar_avatar').src = `../resources/images/avatars/${avatar.avatar}`;
-        document.getElementById('nav_bar_avatar_ref').href = '';
-        document.getElementById('logout_button').style.display = 'block';
-        const profile_form = document.getElementById('profile_form');
-        profile_form.action = '/user/profile';
-        profile_form.method = 'POST';
-        document.getElementById('profile_button').innerHTML = 'Profile';
-    }
-    else {
+fetch('/api/users/user?avatar')
+.then(response => {
+    if (!response.ok) {
         document.getElementById('nav_bar_avatar').src = `../resources/images/avatars/default.png`;
-        document.getElementById('nav_bar_avatar_ref').href = '/auth';
+        document.getElementById('nav_bar_avatar_ref').href = '/static/auth';
         document.getElementById('logout_button').style.display = 'none';
         const profile_form = document.getElementById('profile_form');
-        profile_form.action = '/auth';
-        profile_form.method = 'GET';
+        profile_form.action = '/static/auth';
         document.getElementById('profile_button').innerHTML = 'Log in';
+    } else {
+        return response.json();
+    }
+})
+.then(avatar => {
+    if (avatar) {
+        document.getElementById('nav_bar_avatar').src = `../resources/images/avatars/${avatar.avatar}`;
+        document.getElementById('nav_bar_avatar_ref').href = '/static/profile';
+        document.getElementById('logout_button').style.display = 'block';
+        const profile_form = document.getElementById('profile_form');
+        profile_form.action = '/static/profile';
+        document.getElementById('profile_button').innerHTML = 'Profile';
     }
 })
 .catch(error => {
-  console.error('Could not fetch username and avatar for this session',error);
+    console.error('Could not fetch username and avatar for this session',error);
 });

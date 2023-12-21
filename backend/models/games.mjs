@@ -8,7 +8,7 @@ import { deleteTableRowsMatchingColumns, createTableRow, getTableRowsIdsMatching
  * @param {string} description - Text used in the 'Description' section of the game (HTML displayable text)
  * @param {string} rules - Text used in the 'Rules' section of the game (HTML displayable text)
  * @param {string} about - Text used in the 'About' section of the game (HTML displayable text)
- * @returns {boolean} - Success status of the query
+ * @returns {Promise<boolean>} - Success status of the query
  */
 export async function createGame(slug,illustration,description,rules,about){return await createTableRow('Games',{'slug':slug,'illustration':illustration,'description':description,'rules':rules,'about':about});}
 
@@ -16,7 +16,7 @@ export async function createGame(slug,illustration,description,rules,about){retu
 /**
  * Deletes every game that matches id in Games table.
  * @param {number} game_id - Database game ID
- * @returns {boolean} - Success status of the query
+ * @returns {Promise<boolean>} - Success status of the query
  */
 export async function deleteGameFromId(game_id){return await deleteTableRowsMatchingColumns('Games',{'id':game_id});}
 
@@ -24,7 +24,7 @@ export async function deleteGameFromId(game_id){return await deleteTableRowsMatc
 /**
  * Returns the game ID corresponding to the requested name. Returns null if query returns no result.
  * @param {string} game_name - Game that needs to be retrieved
- * @returns {number || null} - Database game ID
+ * @returns {Promise<number || null>} - Database game ID
  */
 export async function getGameIdFromName(game_name){
     const rows = await getTableRowsIdsMatchingColumnsValues('Games',{'slug':game_name});
@@ -35,7 +35,7 @@ export async function getGameIdFromName(game_name){
 /**
  * Returns the slug of the game that matches game_id. Returns null if the query does not retrieve anything.
  * @param {number} game_id 
- * @returns {string || null} - Result of the query (Null if empty)
+ * @returns {Promise<string || null>} - Result of the query (Null if empty)
  */
 export async function getGameSlugFromId(game_id){
     const row = await getTableRowColumnsFromId('Games',game_id,['slug']);

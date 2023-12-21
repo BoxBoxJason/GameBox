@@ -8,10 +8,11 @@
  */
 
 import { Router } from "express";
+import { rateLimit } from "express-rate-limit"; 
 import { getQueryParams } from "./utils.mjs";
-import { deleteTableRowsMatchingColumns, getTableRowColumns, getTableRowsMatchingColumns, setTableRowColumnsFromId } from "../models/models.mjs";
+import { deleteTableRowsMatchingColumns, getTableRowColumnsFromId, getTableRowsMatchingColumns, setTableRowColumnsFromId } from "../models/models.mjs";
 import { checkUserPasswordFromId, createUser } from "../middlewares/auth.mjs";
-import { getUserIdFromUsername } from "../models/users.mjs";
+import { getUserIdFromNameOrEmail, getUserIdFromUsername } from "../models/users.mjs";
 
 // USERS API ROUTER
 const users_api_router = Router();
@@ -19,21 +20,28 @@ const users_api_router = Router();
 const ALLOWED_GET_REQUEST_PARAMS = ['avatar','id','time'];
 // ALLOWED PARAMETERS FOR PUT REQUESTS
 const ALLOWED_PUT_REQUEST_PARAMS = ['username','avatar','email','password'];
-// ALLOWED PARAMETERS FOR POST REQUESTS
-const REQUIRED_POST_REQUEST_PARAMS = ['username','email','password','avatar'];
+// RATE LIMITERS
+const account_creation_limiter = rateLimit({
+    windowMs: 24 * 60 * 60 * 1000, // 24 hours
+    max: 1 // limit each IP to 1 requests per windowMs
+});
+const login_limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 5 // limit each IP to 5 requests per windowMs
+});
 
-
-users_api_router.post('/create',async function(req,res) {
+// Create user route
+users_api_router.post('/create',account_creation_limiter,async function(req,res) {
     const { username,email,password } = req.body;
     const user_creation_response = await createUser(username,password,email);
     res.status(user_creation_response[0]).json({ message: user_creation_response[1]}).send();
 });
 
-
-users_api_router.get('/:user_id_or_username', async function(req,res){
+// Get user route
+users_api_router.get('/user/:user_id_or_username', async function(req,res){
     let { user_id } = req.params.user_id;
     if (isNaN(parseInt(user_id))) {
-        user_id = getUserIdFromUsername(user_id);
+        user_id = await getUserIdFromUsername(user_id);
         res.status(400).json({ error: 'No matching id was found for given username'})
     }
     else {
@@ -41,20 +49,35 @@ users_api_router.get('/:user_id_or_username', async function(req,res){
     }
     if (user_id != null) {
         const query_params = getQueryParams(req.query,ALLOWED_GET_REQUEST_PARAMS);
-        const user_data = await getTableRowColumns('Users',Object.keys(query_params),user_id);
+        const user_data = await getTableRowColumnsFromId('Users',user_id,Object.keys(query_params));
         res.status(200).json(user_data);
     }
     res.send();
 });
 
 
+users_api_router.get('/user', async function(req,res){
+    const user_id = req.session.user_id || null;
+
+    if (user_id != null) {
+        const query_params = getQueryParams(req.query,ALLOWED_GET_REQUEST_PARAMS);
+        const user_data = await getTableRowColumnsFromId('Users',user_id,Object.keys(query_params));
+        res.status(200).json(user_data);
+    } else {
+        res.status(401).json({ message: 'Please log in to do that' });
+    }
+    res.send();
+});
+
+
+// Get users route
 users_api_router.get('', async function(req,res) {
     const query_params = getQueryParams(req.query,ALLOWED_GET_REQUEST_PARAMS,false);
     const users_data = getTableRowsMatchingColumns('Users',ALLOWED_GET_REQUEST_PARAMS,query_params);
     res.status(200).json(users_data).send();
 });
 
-
+// Set user attributes route
 users_api_router.put('/set/:user_id', async function (req,res) {
     const user_id = parseInt(req.params.user_id);
     const { column_name,new_value,attempt_password,token } = req.body
@@ -90,7 +113,7 @@ users_api_router.put('/set/:user_id', async function (req,res) {
     res.send();
 });
 
-
+// Delete user route
 users_api_router.delete('/delete/:user_id', async function(req,res){
     const user_id = parseInt(req.params.user_id);
     const { attempt_password,token } = req.body;
@@ -106,5 +129,25 @@ users_api_router.delete('/delete/:user_id', async function(req,res){
     }
     res.send();
 });
+
+// Login route
+users_api_router.post('/login',login_limiter, async function(req,res) {
+    const { username_or_email,password } = req.body;
+    const user_id = await getUserIdFromNameOrEmail(username_or_email);
+    if (typeof user_id === 'number' && checkUserPasswordFromId(user_id,password)){
+        req.session.user_id = user_id 
+        res.redirect('/');
+    } else {
+        res.status(400).json({ message: 'Invalid credentials !' });
+    }
+    res.send();
+});
+
+// Logout route
+users_api_router.post('/logout', (req,res) => {
+    req.session.user_id = null;
+    res.redirect('/');
+});
+
 
 export default users_api_router;

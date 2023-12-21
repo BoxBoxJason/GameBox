@@ -21,7 +21,7 @@ var currentTimeOutId;
 
 export function play() {
 	showThrowButton(false);
-	fetch(`/throw-dices/${numberDicesPerThrow}/${minDiceValue}/${maxDiceValue}`)
+	fetch(`/api/games/400m/throw-dices/${numberDicesPerThrow}/${minDiceValue}/${maxDiceValue}`)
     .then(response => response.json())
     .then(data => {
 		dices = data.result;

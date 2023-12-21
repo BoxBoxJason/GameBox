@@ -7,7 +7,7 @@
  * author: BoxBoxJason
  */
 import { moveBotPaddle } from "./bot.mjs";
-import { ball, paddle1, paddle2, game_frame } from "./constants.mjs";
+import { ball, paddle1, paddle2, game_frame, number_rebounds_speed_increase } from "./constants.mjs";
 import { moveBall, placeBall, resetScores } from "./interface.mjs";
 import { playSound } from "./sounds.mjs";
 
@@ -56,7 +56,9 @@ document.addEventListener("keydown", async (e) => {
 	}
 });
 
-
+/**
+ * Starts a game
+ */
 async function startGame() {
 	// Start a set, relaunches a ball at the center
 	consecutive_rebounds = 0;
@@ -69,9 +71,12 @@ async function startGame() {
 	}
 }
 
-
+/**
+ * Respawns the ball at the center of the game frame
+ * @param {HTMLElement} game_frame_rect 
+ */
 async function respawnBall(game_frame_rect){
-	const response = await fetch(`/games/pong/starting-point/${game_frame_rect.top}/${game_frame_rect.right}/${game_frame_rect.bottom}/${game_frame_rect.left}`);
+	const response = await fetch(`/api/games/pong/starting-point/${game_frame_rect.top}/${game_frame_rect.right}/${game_frame_rect.bottom}/${game_frame_rect.left}`);
 	const data = await response.json();
 
 	placeBall(data.x,data.y);
@@ -80,7 +85,9 @@ async function respawnBall(game_frame_rect){
 	consecutive_rebounds = 0;
 }
 
-
+/**
+ * Processes the ball movement
+ */
 async function processBall() {
 	// Generates the movement animation, handles the boucing of ball and the scoring
 	if (ball != null && game_frame != null && paddle1 != null && paddle2 != null){
@@ -111,13 +118,16 @@ async function processBall() {
 	}
 }
 
-
+/**
+ * Bounces the ball off a paddle and speeds
+ * it up after a set number of rebounds
+ */
 function bouncePaddle() {
 	playSound('PADDLE_BOUNCE');
 	dx = -dx;
 	consecutive_rebounds += 1;
 	// Speeding up after a set number of paddle rebounds
-	if (consecutive_rebounds > 10) {
+	if (consecutive_rebounds > number_rebounds_speed_increase) {
 		playSound('SPEED_UP');
 		consecutive_rebounds = 0;
 		dx *= 1.1;
@@ -125,7 +135,10 @@ function bouncePaddle() {
 	}
 }
 
-
+/**
+ * Scores a point for a player
+ * @param {string} scorer 
+ */
 async function score(scorer){
 	// Adds a point to the current score of a player
 	if (scorer == '1'){playSound('PLAYER_SCORE');}
@@ -138,7 +151,13 @@ async function score(scorer){
 	}
 }
 
-
+/**
+ * Checks if the ball bounces off a paddle and alters the speed of the ball accordingly
+ * @param {HTMLElement} ball_rect 
+ * @param {HTMLElement} paddle1_rect 
+ * @param {HTMLElement} paddle2_rect 
+ * @returns 
+ */
 function ballBouncesPaddle(ball_rect, paddle1_rect, paddle2_rect) {
 	return ball_rect.left <= paddle1_rect.right &&
 	ball_rect.bottom >= paddle1_rect.top &&
@@ -150,17 +169,32 @@ function ballBouncesPaddle(ball_rect, paddle1_rect, paddle2_rect) {
 	dx > 0;
 }
 
-
+/**
+ * Checks if the ball bounces off a wall and alters the speed of the ball accordingly
+ * @param {HTMLElement} ball_rect 
+ * @param {HTMLElement} game_frame_rect 
+ * @returns 
+ */
 function ballBouncesWall(ball_rect,game_frame_rect) {
 	return ball_rect.top <= game_frame_rect.top && dy < 0 || ball_rect.bottom >= game_frame_rect.bottom && dy > 0;
 }
 
-
+/**
+ * Returns true if the ball scores for player 1
+ * @param {HTMLElement} ball_rect 
+ * @param {HTMLElement} game_frame_rect 
+ * @returns {boolean} - True if the ball scores for player 1, false otherwise
+ */
 function ballScoresP1(ball_rect, game_frame_rect) {
 	return ball_rect.right >= game_frame_rect.right;
 }
 
-
+/**
+ * Returns true if the ball scores for player 2
+ * @param {HTMLElement} ball_rect 
+ * @param {HTMLElement} game_frame_rect 
+ * @returns {boolean} - True if the ball scores for player 2, false otherwise
+ */
 function ballScoresP2(ball_rect, game_frame_rect) {
 	return ball_rect.left <= game_frame_rect.left;
 }

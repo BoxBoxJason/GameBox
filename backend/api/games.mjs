@@ -71,17 +71,16 @@ games_api_router.get('', async function(req,res) {
 });
 
 
-games_api_router.get('/musics_files_paths/:game_id', async function(req, res){
-  const game_id = parseInt(req.params.game_id);
-  if (isNaN(game_id)) {
-      res.status(400).json({ message:'Game ID has invalid format (must be integer)' });
-  } else {
-      const game_dir_name = getGameSlugFromId(game_id).toLowerCase();
-      const musics_dir_path = join(static_dir_path,game_dir_name,'musics');
-      const files = fs.readdirSync(musics_dir_path).map(file => join(musics_dir_path,file));
-      res.json(files);
-  }
-  res.send();
+games_api_router.get('/musics_files_paths/:game_name', async function(req, res){
+    const game_id = getGameIdFromName(req.params.game_name);
+    if (game_id == null) {
+        res.status(404).json({ message:`Game name ${req.params.game_name} does not exist` });
+    } else {
+        const musics_dir_path = join(static_dir_path,req.params.game_name,'musics');
+        const files = fs.readdirSync(musics_dir_path).map(file => join(musics_dir_path,file));
+        res.json(files);
+    }
+    res.send();
 });
 
 
@@ -125,6 +124,36 @@ games_api_router.delete('/delete/:game_id', async function(req,res){
     }
     res.send();
 });
+
+// ### PONG ###
+const pong_router = Router();
+
+pong_router.get('/starting-point/:top/:right/:bottom/:left', (req, res) => {
+    const { top, right, bottom, left } = req.params;
+    const starting_coordinates = generateStartingPoint(Number(top), Number(right), Number(bottom), Number(left));
+    res.json({ x: starting_coordinates[0],
+        y: starting_coordinates[1],
+        dx: starting_coordinates[2],
+        dy: starting_coordinates[3]
+    });
+});
+
+games_api_router.use('/pong',pong_router);
+
+
+// ### 400m ###
+const olympic_400m_router = Router();
+olympic_400m_router.get('/throw-dices/:number/:min/:max', (req, res) => {
+    const number_of_dices = parseInt(req.params.number);
+    const min = parseInt(req.params.min);
+    const max = parseInt(req.params.max);
+    
+    const result = throwDices(number_of_dices, min, max);
+    
+    res.json({ result });
+});
+
+games_api_router.use('/400m',olympic_400m_router);
 
 
 export default games_api_router;
