@@ -7,8 +7,12 @@
  * author: BoxBoxJason
  */
 
+/**
+ * Returns the sum of the array elements
+ * @param {Array<any>} array 
+ * @returns {number} sum of the array elements
+ */
 export function sum(array){
-    // Returns the sum of all the values in an array
     const sum = array.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
     return sum;
 }

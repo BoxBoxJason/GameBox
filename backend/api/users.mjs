@@ -52,7 +52,6 @@ users_api_router.get('/user/:user_id_or_username', async function(req,res){
         const user_data = await getTableRowColumnsFromId('Users',user_id,Object.keys(query_params));
         res.status(200).json(user_data);
     }
-    res.send();
 });
 
 
@@ -66,7 +65,6 @@ users_api_router.get('/user', async function(req,res){
     } else {
         res.status(401).json({ message: 'Please log in to do that' });
     }
-    res.send();
 });
 
 
@@ -74,7 +72,7 @@ users_api_router.get('/user', async function(req,res){
 users_api_router.get('', async function(req,res) {
     const query_params = getQueryParams(req.query,ALLOWED_GET_REQUEST_PARAMS,false);
     const users_data = getTableRowsMatchingColumns('Users',ALLOWED_GET_REQUEST_PARAMS,query_params);
-    res.status(200).json(users_data).send();
+    res.status(200).json(users_data);
 });
 
 // Set user attributes route
@@ -110,7 +108,6 @@ users_api_router.put('/set/:user_id', async function (req,res) {
             res.status(500).json({ message: 'Internal server error while processing set request'});
         }
     }
-    res.send();
 });
 
 // Delete user route
@@ -120,14 +117,13 @@ users_api_router.delete('/delete/:user_id', async function(req,res){
     // Check if user is logged in and password confirmation
     if (user_id === req.session.user_id && checkUserPasswordFromId(user_id,attempt_password) || ! isNaN(user_id) && token === process.env.ADMIN_TOKEN) {
         if (await deleteTableRowsMatchingColumns('Users',{'id':user_id})) {
-            res.status(204);
+            res.status(204).send();
         } else {
             res.status(500).json({ message: 'Internal server error while processing delete query' });
         }
     } else {
         res.status(401).json( { message: 'Auth failed, please check credentials OR log in' });
     }
-    res.send();
 });
 
 // Login route
@@ -140,7 +136,6 @@ users_api_router.post('/login',login_limiter, async function(req,res) {
     } else {
         res.status(400).json({ message: 'Invalid credentials !' });
     }
-    res.send();
 });
 
 // Logout route
@@ -148,6 +143,5 @@ users_api_router.post('/logout', (req,res) => {
     req.session.user_id = null;
     res.redirect('/');
 });
-
 
 export default users_api_router;

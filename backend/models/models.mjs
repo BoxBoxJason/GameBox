@@ -62,7 +62,7 @@ export async function getTableRowsIdsMatchingColumnsValues(table_name,columns_va
  */
 export async function getTableRowColumnsFromId(table_name,row_id,columns_names) {
     const db = await connectDB();
-        return new Promise((resolve,reject) => {
+    return new Promise((resolve,reject) => {
         db.get(`SELECT ${ columns_names.length != 0 ? columns_names.join(',') : '*'} FROM ${table_name} WHERE id = ?`, [row_id], (err,row) => {
             db.close();
             if (err){

@@ -1,5 +1,5 @@
 
-export function generateStartingPoint(top, right, bottom, left) {
+export function generatePongStartingPoint(top, right, bottom, left) {
 	// Generates a random starting point (middle x axis, random y)
 	// With a random velocity
 	let plusMinus = Math.random() < 0.5 ? -1 : 1;

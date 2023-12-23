@@ -1,0 +1,130 @@
+.games_info_options {
+    display: none;
+    margin: 0 auto;
+    width: fit-content;
+    z-index: 9999;
+    position: relative;
+}
+
+.options_dropdown_displayer{
+    text-align: center;
+    z-index: 9999;
+    margin: 0 auto;
+    width: fit-content;
+}
+
+
+.options_dropdown_displayer:hover .games_info_options {
+    display: flex;
+}
+
+.dropdown_button {
+    margin: 0 auto;
+    color: white;
+    background-color: #302f29;
+    padding: 0 20px 5px;
+    width: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    border-bottom-left-radius: 17px;
+    border-bottom-right-radius: 17px;
+    border: 3px solid #fff;
+    border-top: none;
+    z-index: 9999;
+}
+
+.dropdown_button:hover {
+    background-color: #b30774;
+}
+
+.options_button {
+    margin: 0;
+    color: white;
+    background-color: #302f29;
+    padding: 0 20px;
+    width: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 3px groove #fff;
+    z-index: 9999;
+    position: absolute;
+}
+
+.options_button:hover {
+    background-color: #b30774;
+}
+
+#rules_dropdown_displayer:hover #rules_section , #settings_dropdown_displayer:hover #settings_section , #about_dropdown_displayer:hover #about_section {
+    display: block;
+    left: 50%;
+}
+
+#rules_dropdown_displayer , #about_section{
+    transform: translateX(calc(-50% - 95px));
+}
+#settings_dropdown_displayer, #settings_section{
+    transform: translateX(-50%);
+}
+#about_dropdown_displayer, #rules_section {
+    transform: translateX(calc(-50% + 95px));
+}
+
+.game_info_section {
+    display: none;
+    background-color: #302f29;
+    border-radius: 17px;
+    border: 3px solid #fff;
+    padding: 10px 20px;
+    margin: 0 auto;
+    text-align: left;
+    cursor: default;
+    position: absolute;
+    left: 50%;
+}
+
+.game_info_section h1 {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 20pt;
+    margin-bottom: 10px;
+}
+
+.game_info_section h2 {
+    font-size: 16pt;
+    margin-bottom: 3px;
+    margin-top: 10px;
+}
+
+.game_info_section p {
+    font-size: 12pt;
+    white-space: nowrap;
+    overflow: auto;
+    margin: auto 10px;
+}
+
+.game_info_section table {
+    border-collapse: collapse;
+    margin: 7px 13px;
+}
+
+.game_info_section table td , .game_info_section table th{
+    border: 1px solid #fff;
+    padding: 5px;
+}
+
+#settings_section fieldset {
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    margin: 10px 25px;
+    min-width: 120px;
+}
+
+#settings_section fieldset legend {
+    font-size: 16pt;
+    font-weight: bold;
+}
+
+#settings_section table tr td{
+    border: none;
+}

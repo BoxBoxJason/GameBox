@@ -7,7 +7,7 @@
  * author: BoxBoxJason
  */
 
-import { gameOver,showKeepButton,showThrowButton,animateDicesThrow,showTravelledDistance,updateThrowButton,updateRemainingThrows,putDicesHistory, updateGameStatus } from "./interface.mjs";
+import { gameOver,showKeepButton,showThrowButton,animateDicesThrow,showTravelledDistance,updateRemainingThrows,putDicesHistory, updateGameStatus } from "./interface.mjs";
 import { minDiceValue,maxDiceValue,maxRound,maxThrows, maxDistance, numberDicesPerThrow } from "./constants.mjs";
 import { sum } from "./utils.mjs";
 
@@ -18,7 +18,9 @@ var roundIndex = 0;
 var dices = [];
 var currentTimeOutId;
 
-
+/**
+ * Throws dices and processes the result
+ */
 export function play() {
 	showThrowButton(false);
 	fetch(`/api/games/400m/throw-dices/${numberDicesPerThrow}/${minDiceValue}/${maxDiceValue}`)
@@ -34,20 +36,18 @@ export function play() {
 			}
 		}
 		if (numberThrows < maxThrows && roundIndex < maxRound){
-			updateThrowButton("Relancer");
 			currentTimeOutId = setTimeout(showTravelledDistance,4000,totalDistance,totalDistance + sum(dices) * diceFactor);
 	
 			let remainingThrows = maxThrows - numberThrows;
 			if (remainingThrows > maxRound - 1 - roundIndex) {
 				showThrowButton(true);
 				showKeepButton(true);
-			}
-			else {showKeepButton(true);}
-		}
-		else if(roundIndex < maxRound){
+			} else {showKeepButton(true);}
+		} else if(roundIndex < maxRound){
 			showKeepButton(true);
+		} else{
+			gameOver();
 		}
-		else{gameOver();}
     })
     .catch(error => {
         console.error('Error:', error);
@@ -55,7 +55,9 @@ export function play() {
     });
 }
 
-
+/**
+ * Keeps the dices, adds the result to the total distance and updates the display
+ */
 export function keepDices() {
 	roundIndex++;
 	totalDistance += sum(dices) * diceFactor;
@@ -64,10 +66,10 @@ export function keepDices() {
 	clearTimeout(currentTimeOutId);
 	showTravelledDistance(totalDistance,totalDistance);
 	showKeepButton(false);
-	updateGameStatus("Lancers Validés: " + roundIndex);
-	if (roundIndex == maxRound){gameOver();}
-	else {
-		updateThrowButton("Lancer");
+	updateGameStatus("Validated Throws: " + roundIndex);
+	if (roundIndex == maxRound){
+		gameOver();
+	} else {
 		showThrowButton(true)
 	}
 

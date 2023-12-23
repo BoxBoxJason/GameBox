@@ -9,13 +9,16 @@
 
 import { Router } from "express";
 import { join } from 'path';
+import fs from 'fs';
 import { getQueryParams } from "./utils.mjs";
-import { setTableRowColumnsFromId } from "../models/models.mjs";
+import { getTableRowColumnsFromId, getTableRowsMatchingColumns, setTableRowColumnsFromId } from "../models/models.mjs";
 import { static_dir_path } from "../constants.mjs";
-import { createGame, deleteGameFromId, getGameIdFromName, getGameSlugFromId } from "../models/games.mjs";
+import { createGame, deleteGameFromId, getGameIdFromName } from "../models/games.mjs";
+import { generatePongStartingPoint, throwDices } from "../middlewares/games.mjs";
 
 // GAMES API ROUTER
-const games_api_router = Router();
+export const games_api_router = Router();
+export const play_api_router = Router();
 // ALLOWED GET REQUEST PARAMS
 const ALLOWED_GET_REQUEST_PARAMS = ['id','slug','illustration','description','rules','about'];
 // ALLOWED PUT REQUEST PARAMS
@@ -23,7 +26,7 @@ const ALLOWED_PUT_REQUEST_PARAMS = ['slug','illustration','description','rules',
 // ALLOWED POST REQUEST PARAMS
 const REQUIRED_POST_REQUEST_PARAMS = ['slug','illustration','description','rules','about'];
 
-
+// Create a new game
 games_api_router.post('/create',async function(req,res){
     const { token } = req.body;
     const query_params = getQueryParams(req.query,REQUIRED_POST_REQUEST_PARAMS);
@@ -45,45 +48,43 @@ games_api_router.post('/create',async function(req,res){
     res.send();
 });
 
-
+// Get a game by its ID or slug
 games_api_router.get('/:game_id_or_slug', async function(req,res){
     let game_id = req.params.game_id_or_slug;
-    if (isNaN(parseInt(game_id))) {
-        game_id = getGameIdFromName(game_id);
-        res.status(400).json({ error: 'No matching game ID was found for given game name'});
-    } 
-    else {
+    if (/^\d+$/.test(game_id)) {
         game_id = parseInt(game_id);
+    } else {
+        game_id = await getGameIdFromName(game_id);
     }
     if (game_id != null) {
         const query_params = getQueryParams(req.query,ALLOWED_GET_REQUEST_PARAMS);
-        const game_data = await getTableRowColumns('Games',Object.keys(query_params),game_id);
+        const game_data = await getTableRowColumnsFromId('Games',game_id,Object.keys(query_params));
         res.status(200).json(game_data)
+    } else {
+        res.status(400).json({ error: 'No matching game ID was found for given game name'});
     }
-    res.send();
 });
 
-
+// Get all games
 games_api_router.get('', async function(req,res) {
     const query_params = getQueryParams(req.query,ALLOWED_GET_REQUEST_PARAMS,false);
-    const games_data = getTableRowsMatchingColumns('Games',ALLOWED_GET_REQUEST_PARAMS,query_params);
-    res.status(200).json(games_data).send();
+    const games_data = await getTableRowsMatchingColumns('Games',ALLOWED_GET_REQUEST_PARAMS,query_params);
+    res.status(200).json(games_data);
 });
 
-
+// Get all music files for a given game
 games_api_router.get('/musics_files_paths/:game_name', async function(req, res){
     const game_id = getGameIdFromName(req.params.game_name);
     if (game_id == null) {
         res.status(404).json({ message:`Game name ${req.params.game_name} does not exist` });
     } else {
         const musics_dir_path = join(static_dir_path,req.params.game_name,'musics');
-        const files = fs.readdirSync(musics_dir_path).map(file => join(musics_dir_path,file));
+        const files = fs.readdirSync(musics_dir_path).map(file => `/static/${req.params.game_name}/musics/${file}`);
         res.json(files);
     }
-    res.send();
 });
 
-
+// Set a game's data
 games_api_router.put('/set/:game_id', async function(req,res){
     const game_id = parseInt(req.params.game_id);
     const { token } = req.body;
@@ -95,15 +96,14 @@ games_api_router.put('/set/:game_id', async function(req,res){
     } else {
         const query_outcome = await setTableRowColumnsFromId('Games',game_id,query_params);
         if (query_outcome) {
-            res.status(200);
+            res.status(200).send();
         } else {
             res.status(500).json({ message: 'Internal server error while processing set query'});
         }
     }
-    res.send();
 });
 
-
+// Delete a game given its ID
 games_api_router.delete('/delete/:game_id', async function(req,res){
     const game_id = parseInt(req.params.game_id);
     const { token } = req.body;
@@ -117,12 +117,11 @@ games_api_router.delete('/delete/:game_id', async function(req,res){
             res.status(401).json({ message:'Invalid token' });
         }
         if (success) {
-            res.status(204);
+            res.status(204).send();
         } else {
             res.status(500).json({ message:'Internal server error while processing delete game query' });
         }
     }
-    res.send();
 });
 
 // ### PONG ###
@@ -130,7 +129,7 @@ const pong_router = Router();
 
 pong_router.get('/starting-point/:top/:right/:bottom/:left', (req, res) => {
     const { top, right, bottom, left } = req.params;
-    const starting_coordinates = generateStartingPoint(Number(top), Number(right), Number(bottom), Number(left));
+    const starting_coordinates = generatePongStartingPoint(Number(top), Number(right), Number(bottom), Number(left));
     res.json({ x: starting_coordinates[0],
         y: starting_coordinates[1],
         dx: starting_coordinates[2],
@@ -138,7 +137,7 @@ pong_router.get('/starting-point/:top/:right/:bottom/:left', (req, res) => {
     });
 });
 
-games_api_router.use('/pong',pong_router);
+play_api_router.use('/pong',pong_router);
 
 
 // ### 400m ###
@@ -153,7 +152,4 @@ olympic_400m_router.get('/throw-dices/:number/:min/:max', (req, res) => {
     res.json({ result });
 });
 
-games_api_router.use('/400m',olympic_400m_router);
-
-
-export default games_api_router;
+play_api_router.use('/400m',olympic_400m_router);

@@ -10,37 +10,28 @@
 	width: 100%;
 }
 
+.gameframe_wrapper {
+	background: linear-gradient(to top right, #a14796, #b30718, #06328c);
+	padding: 20px;
+	border-radius: 20px;
+	margin: auto;
+	width: fit-content;
+}
+
 #gameFrame {
-	width: 95vw;
-	height: 85vh;
-	border: 5px outset black;
+	width: 80vw;
+	height: 70vh;
+	background-color: #000;
+	color: #fff;
 	border-radius: 15px;
-	background-color: rgba(200,200,200,0.5);
 	margin: 0 auto 20px;
+	display: flex;
 }
-
-
-#gameFrame p{
-	margin: 0;
-	width: 100%;
-	text-align: center;
-	font-size: 13pt;
-}
-
 
 .gameFrame-child {
 	flex: 50%;
 	display: block;
 }
-
-.gameFrame-child:first-of-type {
-	background-color: rgba(207, 10, 184,0.3);
-}
-
-.gameFrame-child:last-of-type{
-	background-color: rgba(20,150,50,0.3)
-}
-
 
 #historyArea {
 	width: fit-content;
@@ -50,14 +41,18 @@
     gap: 25px;
 }
 
+.game_progress_container {
+	margin: 10px auto 0;
+	width: fit-content;
+}
 
 #diceArea {
 	background-image: url('../images/diceArea.png');
 	background-size: contain;
 	background-repeat: no-repeat;
 	margin: 10px auto;
-	width: 51vh;
-	height: 51vh;
+	width: calc(70vh - 250px);
+	height: calc(70vh - 250px);
 }
 
 .gameButtons{
@@ -97,14 +92,13 @@
 	gap: 5px;
 	width: 110px;
 }
-  
+
 .dice-1, .dice-2, .dice-3, .dice-4, .dice-5, .dice-6 {
 	width: 50px;
 	height: 50px;
 	background-size: contain;
 	margin: 0;
 }
-
 
 .throwDice {
     position: relative;
@@ -118,7 +112,6 @@
     left: calc(50% - 100px);
     top: calc(50% - 25px);
 }
-
 
 @keyframes roll1 {
     0% { transform: rotateX(0deg) rotateY(0deg);}

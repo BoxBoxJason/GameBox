@@ -74,44 +74,22 @@ function showButton(button,show){
 
 
 // "throw / rethrow" related interface function
-export function updateRemainingThrows(numberThrows){document.getElementById("remainingThrows").textContent = "Lancers restants: " + (maxThrows - numberThrows);}
+export function updateRemainingThrows(numberThrows){document.getElementById("remainingThrows").textContent = "Remaining Throws: " + (maxThrows - numberThrows);}
 export function updateThrowButton(text){throwButton.title = text;}
 export function showThrowButton(show){showButton(throwButton,show);}
 export function showKeepButton(show){showButton(keepButton,show);}
-export function showNavBar(show){showButton(document.getElementById("navBar"),show);}
-export function showStartText(show){showButton(document.getElementById("startText"),show);}
 export function updateGameStatus(text){document.getElementById("gameStatus").textContent = text;}
 export function setMusicTitle(text){document.getElementById("musicTitle").textContent = text;}
 export function setMusicAuthor(text){document.getElementById("musicAuthor").textContent = text;}
-
-function showSettings(show){showButton(document.getElementById("settings"),show);}
-function showAbout(show){showButton(document.getElementById("about"),show);}
-function showRules(show){showButton(document.getElementById("rules"),show)}
-function showGameFrame(show){
-	if (show){document.getElementById("gameFrame").style.display = "flex";}
-	else{document.getElementById("gameFrame").style.display = "none";}
-}
-export function showPage(shows){
-	showRules(shows[0]);
-	showGameFrame(shows[1]);
-	showSettings(shows[2]);
-	showAbout(shows[3]);
-}
 
 export function gameOver() {
 	// Stops the game
 	showKeepButton(false);
 	showThrowButton(false);
-	let audio = new Audio('./soundeffects/victory.mp3');
+	const audio = new Audio('./soundeffects/victory.mp3');
 	audio.play();
-	let gameStatus = document.getElementById("gameStatus");
-	gameStatus.textContent = "Partie Terminée !";
-	gameStatus.style.position = "fixed";
-	gameStatus.style.fontSize = '40pt';
-	gameStatus.style.textTransform = 'uppercase';
-	gameStatus.style.color = '#aa0000';
-	gameStatus.style.fontWeight = 'bold';
-	gameStatus.style.top = '46%';
+	const gameStatus = document.getElementById("gameStatus");
+	gameStatus.textContent = "Game Over !";
 
 }
 

@@ -9,7 +9,6 @@ main {
     width: 100vw;
 }
 
-
 .main {
     width: 80vw;
     flex: 80%;
@@ -18,4 +17,29 @@ main {
 .side {
     width: 10vw;
     flex: 10%;
+}
+
+#games_display {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2vw;
+    width: 100%;
+}
+
+.miniature {
+    text-align: center;
+    min-width: 200px;
+    max-width: 25vw;
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    cursor: pointer;
+}
+
+.miniature img {
+    margin-top: 10px;
+    border-radius: 10px;
+    width: 100%;
+    height: auto;
 }

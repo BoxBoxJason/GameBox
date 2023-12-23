@@ -25,7 +25,7 @@ Pong Game (player vs machine) for web browsers
 - An absolute eye candy
 - Cool sound effects (may drive you nuts)
 - The ball respawns with a random speed / angle every time
-- Game speeds up every 10 rebounds (you won't be bored I promise)
+- Game speeds up every 8 rebounds (you won't be bored I promise)
 
 ### How To play
 - Press Enter to start a game

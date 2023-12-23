@@ -1,17 +1,31 @@
 # GameBox CHANGELOG
 
-## GameBox V1.0.3 400M RELEASE (20/12/2023)
+## GameBox V1.0.4 400M RELEASE ()
+
+### New Features
+- Released Profile page
+- Released 400m minigame
+- Released centralized games information display
+
+### Fixes
+
+### TODO
+1. Implement time spent tracking
+1. Implement scores
+3. Implement new games
+
+
+## GameBox V1.0.3 API REWORK (20/12/2023)
 
 ### New Features
 - Added header (navigation bar) and footer (credits) to every page
-- Released Profile page
-- Released 400m minigame
+- Humongous rework of backend route calls
 - Released API routes
 - Applied limiter to limit query load and prevent bruteforce attacks
 
 ### Fixes
 - Fixed register / login / logout buttons, forms, submits
-- Humongous rework of backend route calls
+- Changed models functions that were redundant / non functionnal
 
 ### TODO
 1. Implement score tracking
