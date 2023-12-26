@@ -38,8 +38,8 @@ export function placeBall(x,y) {
 function movePlayerPaddle(e) {
 	// Moves the player paddle by following the client cursor
     if (game_frame != null && paddle1 != null){
-        let game_frame_pos = game_frame.getBoundingClientRect();
-        let new_top_coord = e.pageY - (game_frame_pos.top  + 50);
+        const game_frame_pos = game_frame.getBoundingClientRect();
+        let new_top_coord = e.pageY - (game_frame_pos.top  + 50) - window.scrollY;
         new_top_coord = Math.max(0,new_top_coord);
         new_top_coord = Math.min(new_top_coord,game_frame_pos.height -100);
         paddle1.style.top = new_top_coord + 'px';

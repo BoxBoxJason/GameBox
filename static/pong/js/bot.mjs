@@ -26,7 +26,7 @@ export function moveBotPaddle() {
     if (ball != null && game_frame != null && paddle2 != null) {
         const gameframe_bounding_rect = game_frame.getBoundingClientRect();
         const ball_bounding_rect = ball.getBoundingClientRect();
-        let newTopCoord = window.pageYOffset + (ball_bounding_rect.top + ball_bounding_rect.bottom) / 2 - paddle_height - ball_size;
+        let newTopCoord = window.scrollY + ball_bounding_rect.top - paddle_height - 2*ball_size;
         newTopCoord = Math.max(0,newTopCoord);
         newTopCoord = Math.min(newTopCoord,gameframe_bounding_rect.height - 100);
 

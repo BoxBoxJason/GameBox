@@ -79,8 +79,6 @@ export function updateThrowButton(text){throwButton.title = text;}
 export function showThrowButton(show){showButton(throwButton,show);}
 export function showKeepButton(show){showButton(keepButton,show);}
 export function updateGameStatus(text){document.getElementById("gameStatus").textContent = text;}
-export function setMusicTitle(text){document.getElementById("musicTitle").textContent = text;}
-export function setMusicAuthor(text){document.getElementById("musicAuthor").textContent = text;}
 
 export function gameOver() {
 	// Stops the game

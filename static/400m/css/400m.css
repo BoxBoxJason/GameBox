@@ -4,37 +4,57 @@
 * GAMEFRAME AND GAME ELEMENTS STYLING
 */
 
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Barlow";
+}
 
 #showDistance {
-	height: 90%;
+	height: 65vh;
 	width: 100%;
+	min-width: 500px;
 }
 
 .gameframe_wrapper {
 	background: linear-gradient(to top right, #a14796, #b30718, #06328c);
-	padding: 20px;
-	border-radius: 20px;
+	padding: 30px;
+	border-radius: 40px;
 	margin: auto;
 	width: fit-content;
 }
 
 #gameFrame {
-	width: 80vw;
-	height: 70vh;
-	background-color: #000;
-	color: #fff;
-	border-radius: 15px;
-	margin: 0 auto 20px;
-	display: flex;
+	min-width: 550px;
+    width: 80vw;
+    background-color: #000;
+    color: #fff;
+    border-radius: 20px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .gameFrame-child {
-	flex: 50%;
-	display: block;
+    width: 100%;
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (min-width: 955px) {
+    #gameFrame {
+        flex-direction: row;
+    }
+
+    .gameFrame-child {
+        width: 50%;
+    }
 }
 
 #historyArea {
 	width: fit-content;
+	height: 10vh;
 	display: grid;
 	margin: 10px auto 0;
     grid-template-columns: repeat(4, 1fr);
@@ -49,25 +69,37 @@
 #diceArea {
 	background-image: url('../images/diceArea.png');
 	background-size: contain;
+	background-position: center;
 	background-repeat: no-repeat;
+	height: 50vh;
+	width: auto;
+	min-width: 500px;
 	margin: 10px auto;
-	width: calc(70vh - 250px);
-	height: calc(70vh - 250px);
 }
 
-.gameButtons{
+.game_buttons{
 	margin: 10px auto 0;
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	gap: 15px;
 	width: fit-content;
+	height: 10vh;
 }
 
-.gameButton {
+#throwButton {
+	background-image: url('../images/throwIcon.png');
+}
+
+#keepButton {
+	background-image: url('../images/keepIcon.png');
+}
+
+.game_button {
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
 	text-align: center;
-	width: 100px;
-	height: 100px;
-	margin: 0;
+	width: 10vh;
+	height: 10vh;
+	margin: 0 15px;
+	padding: 3px;
 	border: 3px outset black;
 	border-radius: 15px;
 	background-color: #505050;
@@ -75,15 +107,9 @@
     transition: background-color 0.6s, color 0.6s;
 }
 
-.gameButton:hover {
+.game_button:hover {
 	background-color: #353535;
 	color: #fff;
-}
-
-.button-icon {
-	width: 100px;
-	height: 100px;
-	object-fit: contain;
 }
 
 .dicesSave {

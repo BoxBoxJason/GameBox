@@ -1,5 +1,6 @@
 nav {
   width: 80vw;
+  min-width: 600px;
   height: 56px;
   margin: 0 auto;
   background-color: #302f29;

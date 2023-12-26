@@ -9,7 +9,7 @@
 
 import { gameOver,showKeepButton,showThrowButton,animateDicesThrow,showTravelledDistance,updateRemainingThrows,putDicesHistory, updateGameStatus } from "./interface.mjs";
 import { minDiceValue,maxDiceValue,maxRound,maxThrows, maxDistance, numberDicesPerThrow } from "./constants.mjs";
-import { sum } from "./utils.mjs";
+import { sum } from "../../resources/js/utils.mjs";
 
 const diceFactor = maxDistance / (maxDiceValue - 1) / numberDicesPerThrow / maxRound;
 var numberThrows = 0;

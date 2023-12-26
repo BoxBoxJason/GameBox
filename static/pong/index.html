@@ -4,12 +4,13 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>Pong</title>
+		<title>GameBox</title>
 		<link rel="icon" href="/static/resources/images/logos/gamebox_symbol.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="./css/pong.css">
     <link rel="stylesheet" type="text/css" href="../resources/css/nav_bar.css">
     <link rel="stylesheet" type="text/css" href="../resources/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/games_infos.css">
 		<link rel="stylesheet" type="text/css" href="../resources/css/fonts.css">
-		<link rel="stylesheet" type="text/css" href="./css/pong.css">
 	</head>
 	
 	<body>
@@ -25,12 +26,38 @@
             <div id="profile_dropdown">
               <form id="profile_form" action="/static/auth"><button type="submit" class="profile_dropdown_option" id="profile_button">Log In</button></form>
               <form action="/api/users/logout" method="POST"><button type="submit" class="profile_dropdown_option" id="logout_button">Log Out</button></form>
-              
             </div>
           </li>
         </ul>
       </nav>
       <script src="../resources/js/nav_bar.mjs"></script>
+
+      <div class="options_dropdown_displayer">
+        <div class="dropdown_button"><div style="transform: scaleX(8); width: fit-content; margin: 0 auto;">v</div></div>
+        <div class="games_info_options">
+          <div class="options_button" id="rules_dropdown_displayer">
+            <div>Rules</div>
+            <div class="game_info_section" id="rules_section"></div>
+          </div>
+          <div class="options_button" id="settings_dropdown_displayer">
+            <div>Settings</div>
+            <div class="game_info_section" id="settings_section">
+              <h1>Settings</h1>
+            </div>
+          </div>
+          <div class="options_button" id="about_dropdown_displayer">
+            <div>About</div>
+            <div class="game_info_section" id="about_section"></div>
+          </div>
+        </div>
+      </div>
+      <audio id="musicPlayer" controls style="display: none;"></audio>
+      <script type="module">
+        import { setGameInfos } from '../resources/js/gamepage.mjs';
+        import { initMusics } from '../resources/js/music.mjs';
+        setGameInfos('pong');
+        initMusics('pong');
+      </script>
     </header>
 
     <main>
@@ -48,7 +75,7 @@
           
         </div>
       </div>
-      <fieldset>
+      <fieldset class="difficulty_picker">
         <legend>Difficulty</legend>
         <input type="radio" checked="checked" id="1" class="difficultyButton" name="difficulty" value="1">
         <label for="1"></label>

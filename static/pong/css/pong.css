@@ -1,9 +1,7 @@
 * {
-	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
 	color: white;
-	font-family: "Barlow";
 }
 
 
@@ -133,20 +131,20 @@ fieldset {
 	#cc0502 90%);
 }
 
-fieldset legend {
+.difficulty_picker legend {
 	font-size: 15pt;
 }
 
-fieldset input {
+.difficulty_picker input {
 	opacity: 0;
 	width: 0;
 }
 
-fieldset label {
+.difficulty_picker label {
 	width: 10%;
 	aspect-ratio: 1/1;
 }
 
-fieldset input[type="radio"]:checked + label {
+.difficulty_picker input[type="radio"]:checked + label {
 	background: rgba(0,0,0,0.8);
 	clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);}
