@@ -5,11 +5,10 @@
     <meta charset="utf-8">
     <title>GameBox</title>
     <link rel="icon" type="image/x-icon" href="../resources/images/logos/gamebox_symbol.png">
+    <link rel="stylesheet" type="text/css" href="./css/profile.css">
     <link rel="stylesheet" type="text/css" href="../resources/css/fonts.css">
     <link rel="stylesheet" type="text/css" href="../resources/css/nav_bar.css">
     <link rel="stylesheet" type="text/css" href="../resources/css/footer.css">
-    <link rel="stylesheet" type="text/css" href="./css/user/profile.css">
-        
   </head>
 
   <body>
@@ -34,7 +33,87 @@
     </header>
 
     <main>
-      <script type="module" src=""></script>
+      <div class="left_menu">
+        <div class="menu_option" id="show_profile">Profile</div>
+        <div class="menu_option" id="show_scores">Scores</div>
+        <div class="menu_option" id="show_statistics">Statistics</div>
+        <div class="menu_option" id="show_settings">Settings</div>
+      </div>
+      <div class="main">
+        <div id="profile">
+          <form class="profile_form">
+            <h1>User Informations</h1>
+            <div class="profile_form_row">
+              <img id="user_avatar" src="../resources/images/avatars/default.png" alt="User avatar" title="User avatar">
+              <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg">
+            </div>
+            <div class="profile_form_row">
+              <label for="username">Username</label><br>
+              <input type="text" id="username_input" name="username" placeholder="Username">
+            </div>
+            <div class="profile_form_row">
+              <label for="email">Email</label><br>
+              <input type="email" id="email_input" name="email" placeholder="Email">
+            </div>
+            <div class="profile_form_row">
+              <label for="password_info">Current Password</label>
+              <input type="password" id="password_info" name="password_info" placeholder="Current Password">
+            </div>
+            <div class="profile_form_row">
+              <input type="submit" value="Save">
+            </div>
+          </form>
+
+          <form class="profile_form">
+            <h1>Password</h1>
+            <div class="profile_form_row">
+              <label for="current_password">Current Password</label><br>
+              <input type="password" id="current_password" name="current_password" placeholder="Current Password">
+            </div>
+            <div class="profile_form_row">
+              <label for="new_password">New Password</label><br>
+              <input type="password" id="new_password" name="new_password" placeholder="New Password">
+            </div>
+            <div class="profile_form_row">
+              <label for="password_confirm">Confirm password</label><br>
+              <input type="password" id="password_confirm" name="password_confirm" placeholder="Confirm password">
+            </div>
+            <div class="profile_form_row">
+              <input type="submit" value="Save">
+            </div>
+          </form>
+        </div>
+
+        <div id="settings">
+          <h1>User Settings</h1>
+          <form method="" class="property_control_form">
+            <label for="scores_property">Score tracking</label>
+            <input class="red_submit" id="scores_property" name="scores_property" type="submit" value="Disable">
+          </form>
+          <form class="property_control_form">
+            <label for="time_property">Time tracking</label>
+            <input class="red_submit" id="time_property" name="time_property" type="submit" value="Disable">
+          </form>
+          <form class="property_control_form red_form">
+            <label for="reset_data">Reset user data</label>
+            <input class="red_submit" id="reset_data" name="reset_data" type="submit" value="Reset">
+          </form>
+          <form class="property_control_form red_form">
+            <label for="delete_account">Delete account</label>
+            <input class="red_submit" id="delete_account" name="delete_account" type="submit" value="Delete">
+          </form>
+        </div>
+      </div>
+
+      <div id="scores">
+
+      </div>
+
+      <div id="statistics">
+
+      </div>
+
+      <script type="module" src="./js/profile.mjs"></script>
     </main>
 
     <footer>

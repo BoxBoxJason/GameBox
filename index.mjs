@@ -1,5 +1,6 @@
 import express from 'express'
 import session from 'express-session';
+import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -11,7 +12,7 @@ import api_router from './backend/api/api.mjs';
 // ### EXPRESS SETUP ###
 const app = express();
 app.use(express.json());
-
+app.use(bodyParser.json());
 
 // ### SESSIONS ###
 app.use(cookieParser());

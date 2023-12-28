@@ -16,9 +16,11 @@ List of minigames that will be implemented later:
 - Obstacle Run
 - Whack-a-Mole
 
+
 ## Pong
 Pong Game (player vs machine) for web browsers
-![Pong Gameframe](./illustrations/pong/gameframe.png "Pong gameframe illustration")
+![Pong Gameframe](./illustrations/pong/gameframe.png "Pong gameframe illustration")  
+
 ### Specs
 - The game is fully resizable, it can adapt to any screen size dynamically, you can add it into any parent component
 - 10 difficulty levels available
@@ -35,3 +37,12 @@ Pong Game (player vs machine) for web browsers
 - Control your paddle with mouse cursor
 
 ![Choose difficulty](./illustrations/pong/difficulty.png "Set difficulty illustration")
+
+
+## Olympic 400m
+Olympic 400m die minigame (solo player).  
+![400m Gameframe](./illustrations/400m/gameframe.png "400m gameframe illustration")  
+
+### Specs
+
+### How to play

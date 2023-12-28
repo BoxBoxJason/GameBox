@@ -17,9 +17,9 @@ import { getUserIdFromNameOrEmail, getUserIdFromUsername } from "../models/users
 // USERS API ROUTER
 const users_api_router = Router();
 // ALLOWED PARAMETERS FOR GET REQUESTS
-const ALLOWED_GET_REQUEST_PARAMS = ['avatar','id','time'];
+const ALLOWED_GET_REQUEST_PARAMS = ['avatar','id','time','username','track_time','track_score'];
 // ALLOWED PARAMETERS FOR PUT REQUESTS
-const ALLOWED_PUT_REQUEST_PARAMS = ['username','avatar','email','password'];
+const ALLOWED_PUT_REQUEST_PARAMS = ['track_time','track_score','time','avatar','username','email','password'];
 // RATE LIMITERS
 const account_creation_limiter = rateLimit({
     windowMs: 24 * 60 * 60 * 1000, // 24 hours
@@ -40,7 +40,7 @@ users_api_router.post('/create',account_creation_limiter,async function(req,res)
 // Get user route
 users_api_router.get('/user/:user_id_or_username', async function(req,res){
     let { user_id } = req.params.user_id;
-    if (isNaN(parseInt(user_id))) {
+    if (!/^\d+$/.test(user_id)) {
         user_id = await getUserIdFromUsername(user_id);
         res.status(400).json({ error: 'No matching id was found for given username'})
     }
@@ -59,7 +59,7 @@ users_api_router.get('/user', async function(req,res){
     const user_id = req.session.user_id || null;
 
     if (user_id != null) {
-        const query_params = getQueryParams(req.query,ALLOWED_GET_REQUEST_PARAMS);
+        const query_params = getQueryParams(req.query,[...ALLOWED_GET_REQUEST_PARAMS,'email']);
         const user_data = await getTableRowColumnsFromId('Users',user_id,Object.keys(query_params));
         res.status(200).json(user_data);
     } else {
@@ -96,6 +96,41 @@ users_api_router.put('/set/:user_id', async function (req,res) {
         } else {
             if (attempt_password && await checkUserPasswordFromId(user_id,attempt_password)) {
                 set_outcome = await setTableRowColumnsFromId('Users',user_id,{column_name,new_value});
+            } else {
+                res.status(401).json({ message:'Passwords do not match' });
+            }
+        }
+        // Everything went well
+        if (set_outcome) {
+            res.status(200).json({ message: `${column_name} set to new value`});
+        // Error in set function
+        } else {
+            res.status(500).json({ message: 'Internal server error while processing set request'});
+        }
+    }
+});
+
+// Set user attributes route
+users_api_router.put('/set', async function (req,res) {
+    const user_id = req.session.user_id || null;
+    const { new_values,attempt_password } = req.body
+
+    // Case user not logged in
+    if (user_id == null) {
+        res.status(401).json({ message:'Please log in to do that' });
+    // Case user requested unknown / unauthorized column change
+    } else if (! Object.keys(new_values).every(column_name => ALLOWED_PUT_REQUEST_PARAMS.includes(column_name))){
+        res.status(400).json({ message:'Unknown / unauthorized parameter set attempted'});
+    // Able to proceed
+    } else {
+        let set_outcome = false
+        // Case no password confirmation required
+        if (Object.keys(new_values).every(column_name => ALLOWED_PUT_REQUEST_PARAMS.slice(0,3).includes(column_name))) {
+            set_outcome = await setTableRowColumnsFromId('Users',user_id,new_values);
+        // Case password required
+        } else {
+            if (attempt_password && await checkUserPasswordFromId(user_id,attempt_password)) {
+                set_outcome = await setTableRowColumnsFromId('Users',user_id,new_values);
             } else {
                 res.status(401).json({ message:'Passwords do not match' });
             }

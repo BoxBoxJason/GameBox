@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="../resources/css/nav_bar.css">
     <link rel="stylesheet" type="text/css" href="../resources/css/footer.css">
     <link rel="stylesheet" type="text/css" href="./css/home.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/games_display.css">
   </head>
 
   <body>
@@ -24,7 +25,6 @@
             <div id="profile_dropdown">
               <form id="profile_form" action="/static/auth"><button type="submit" class="profile_dropdown_option" id="profile_button">Log In</button></form>
               <form action="/api/users/logout" method="POST"><button type="submit" class="profile_dropdown_option" id="logout_button">Log Out</button></form>
-              
             </div>
           </li>
         </ul>
@@ -38,10 +38,10 @@
       </div>
 
       <div id="main">
-        <h2>Games</h2>
+        <h1>Games</h1>
         <div id="games_display">
         </div>
-        <h2>Leaderboard</h2>
+        <h1>Leaderboard</h1>
           <div id="leaderboard">
           </div>
       </div>

@@ -4,21 +4,54 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>GameBox</title>
-		<link rel="stylesheet" href="./css/games.css">
+    <link rel="icon" href="../resources/images/logos/gamebox_symbol.png" type="image/x-icon">
+		<link rel="stylesheet" type="text/css" href="./css/games.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/nav_bar.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/games_display.css">
 	</head>
 
 	<body>
 		<header>
-
-		</header>
+      <nav>
+        <ul>
+          <li><a href="/"><img src="../resources/images/logos/gamebox.png" alt="GameBox logo" title="Go to home page"></a></li>
+          <li><div class="nav_bar_child" onclick="window.location.href = '/static/games'" title="Go to game selection">Games</div></li>
+          <li><div class="nav_bar_child" onclick="window.location.href = '/static/score'" title="Go to leaderboard">Scores</div></li>
+          <li><div class="nav_bar_child" onclick="window.location.href = '/static/about'" title="Go to about">About</div></li>
+          <li>
+            <a href="/static/auth" id="nav_bar_avatar_ref"><img id="nav_bar_avatar" src="../resources/images/avatars/default.png" alt="Player avatar" title="Go to profile"></a>
+            <div id="profile_dropdown">
+              <form id="profile_form" action="/static/auth"><button type="submit" class="profile_dropdown_option" id="profile_button">Log In</button></form>
+              <form action="/api/users/logout" method="POST"><button type="submit" class="profile_dropdown_option" id="logout_button">Log Out</button></form>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <script type="module" src="../resources/js/nav_bar.mjs"></script>
+    </header>
 
 		<main>
-
-		</main>
-
+      <div class="main">
+        <h1>Games</h1>
+        <div id="games_display"></div>
+      </div>
+    </main>
+    <script type="module">
+      import { fillGamesDisplay } from "../resources/js/gamesFromDB.mjs";
+      fillGamesDisplay(document.getElementById("games_display"));
+    </script>
 		<footer>
-
-		</footer>
-		<script src="js/script.js"></script>
+      <p style="font-weight: bold; text-transform: uppercase;">Thanks for using GameBox !</p>
+      <table class="links">
+        <tr>
+          <td><a href="https://github.com/BoxBoxJason/GameBox"><img src="../resources/images/logos/github.png" title="Go to GameBox GitHub"></a></td>
+          <td><a href="https://www.linkedin.com/in/lo%C3%AFck-goupil-hallay-710619245/"><img src="../resources/images/logos/linkedin.png" title="Go to author LinkedIn"></a></td>
+        </tr>
+      </table>
+      <p>Developped by <a href="https://github.com/BoxBoxJason">@BoxBoxJason</a></p>
+      <p>Designs and logos by <a href="https://github.com/BoxBoxJason">@BoxBoxJason</a></p>
+    </footer>
 	</body>
 </html>

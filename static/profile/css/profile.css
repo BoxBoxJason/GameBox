@@ -1,0 +1,129 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+main {
+  display: flex;
+}
+
+main .left_menu {
+  margin-left: 10px;
+  min-width: 200px;
+  max-width: 320px;
+}
+
+main .main {
+  min-width: calc(100% - 321px);
+  max-width: calc(100% - 199px);
+}
+main .left_menu .menu_option {
+  padding: 6px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+main .left_menu .menu_option:hover {
+  background-color: #3da5c4;
+}
+
+.main #profile {
+  display: flex;
+}
+
+.main .profile_form {
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: 10px 20px;
+  border: 1px solid #3da5c4;
+  margin: auto;
+  border-radius: 20px;
+  width: 300px;
+  box-shadow: 0 0 15px #3da5c4;
+}
+
+
+.profile_form_row {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+
+.profile_form_row label {
+  font-size: 13pt;
+}
+
+
+.profile_form_row input[type="file"] {
+  margin: 0 auto 8px;
+}
+
+.profile_form_row input[type="text"], .profile_form_row input[type="email"], .profile_form_row input[type="password"] {
+  text-align: center;
+  width: 200px;
+  height: 25px;
+  margin: 0 auto 8px;
+  font-size: 13pt;
+}
+
+.profile_form_row input[type="submit"] {
+  text-align: center;
+  justify-content: center;
+  height: 30px;
+  margin: 0 auto 8px;
+  padding: 0 10px;
+  font-size: 13pt;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: #065c0b;
+  border: 2px solid #aaa;
+}
+
+#user_avatar {
+  width: 250px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.main #settings {
+  display: none;
+  flex-direction: column;
+}
+
+#settings .property_control_form {
+  margin: 7px auto;
+  min-width: 300px;
+  max-width: 500px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13pt;
+  padding: 4px 10px;
+}
+
+#settings h1 {
+  text-align: center;
+}
+
+#settings .property_control_form input[type="submit"] {
+  width: 70px;
+  font-size: 13pt;
+  border-radius: 5px;
+}
+
+#settings .red_form {
+  background-color: #e6a5ac;
+}
+
+#settings .red_submit {
+  border: 1px solid #d9041b;
+  color: #d9041b;
+}
+
+#settings .green_submit {
+  border: 1px solid #065c0b;
+  color: #065c0b;
+}
