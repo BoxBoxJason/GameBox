@@ -58,7 +58,7 @@ games_api_router.get('/:game_id_or_slug', async function(req,res){
     }
     if (game_id != null) {
         const query_params = getQueryParams(req.query,ALLOWED_GET_REQUEST_PARAMS);
-        const game_data = await getTableRowColumnsFromId('Games',game_id,Object.keys(query_params));
+        const game_data = await getTableRowColumnsFromId('Game',game_id,Object.keys(query_params));
         res.status(200).json(game_data)
     } else {
         res.status(400).json({ error: 'No matching game ID was found for given game name'});
@@ -67,8 +67,8 @@ games_api_router.get('/:game_id_or_slug', async function(req,res){
 
 // Get all games
 games_api_router.get('', async function(req,res) {
-    const query_params = getQueryParams(req.query,ALLOWED_GET_REQUEST_PARAMS,false);
-    const games_data = await getTableRowsMatchingColumns('Games',ALLOWED_GET_REQUEST_PARAMS,query_params);
+    const query_params = getQueryParams(req.query,ALLOWED_GET_REQUEST_PARAMS);
+    const games_data = await getTableRowsMatchingColumns('Game',Object.keys(query_params),[]);
     res.status(200).json(games_data);
 });
 
@@ -94,7 +94,7 @@ games_api_router.put('/set/:game_id', async function(req,res){
     } else if (isNaN(game_id)) {
         res.status(400).json({error: 'Invalid game ID format (must be integer)'});
     } else {
-        const query_outcome = await setTableRowColumnsFromId('Games',game_id,query_params);
+        const query_outcome = await setTableRowColumnsFromId('Game',game_id,query_params);
         if (query_outcome) {
             res.status(200).send();
         } else {

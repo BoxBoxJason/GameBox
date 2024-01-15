@@ -16,11 +16,11 @@
  */
 export function getQueryParams(query,allowed_params_list,all_if_empty=true) {
     const query_params = {};
-    if (query.length === 0) {
+    if (Object.keys(query).length === 0 && all_if_empty) {
         allowed_params_list.forEach(key => {
             query_params[key] = null;
         });
-    } else if(all_if_empty){
+    } else {
         Object.keys(query).forEach(key => {
             if (allowed_params_list.includes(key)) {
                 query_params[key] = query[key];

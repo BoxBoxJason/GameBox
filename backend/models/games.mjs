@@ -10,7 +10,7 @@ import { deleteTableRowsMatchingColumns, createTableRow, getTableRowsIdsMatching
  * @param {string} about - Text used in the 'About' section of the game (HTML displayable text)
  * @returns {Promise<boolean>} - Success status of the query
  */
-export async function createGame(slug,illustration,description,rules,about){return await createTableRow('Games',{'slug':slug,'illustration':illustration,'description':description,'rules':rules,'about':about});}
+export async function createGame(slug,illustration,description,rules,about){return await createTableRow('Game',{'slug':slug,'illustration':illustration,'description':description,'rules':rules,'about':about});}
 
 
 /**
@@ -18,7 +18,7 @@ export async function createGame(slug,illustration,description,rules,about){retu
  * @param {number} game_id - Database game ID
  * @returns {Promise<boolean>} - Success status of the query
  */
-export async function deleteGameFromId(game_id){return await deleteTableRowsMatchingColumns('Games',{'id':game_id});}
+export async function deleteGameFromId(game_id){return await deleteTableRowsMatchingColumns('Game',{'id':game_id});}
 
 
 /**
@@ -27,7 +27,7 @@ export async function deleteGameFromId(game_id){return await deleteTableRowsMatc
  * @returns {Promise<number || null>} - Database game ID
  */
 export async function getGameIdFromName(game_name){
-    const rows = await getTableRowsIdsMatchingColumnsValues('Games',{'slug':game_name});
+    const rows = await getTableRowsIdsMatchingColumnsValues('Game',{'slug':game_name});
     return rows.length > 0 ? rows[0].id : null;
 }
 
@@ -38,6 +38,6 @@ export async function getGameIdFromName(game_name){
  * @returns {Promise<string || null>} - Result of the query (Null if empty)
  */
 export async function getGameSlugFromId(game_id){
-    const row = await getTableRowColumnsFromId('Games',game_id,['slug']);
+    const row = await getTableRowColumnsFromId('Game',game_id,['slug']);
     return row ? row.slug : null;
   }

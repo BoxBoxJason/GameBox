@@ -29,7 +29,7 @@ app.use(static_router);
 app.use('/api',api_router);
 
 // ### DATABASE ###
-initDatabase();
+await initDatabase();
 
 // ### HOSTING ###
 const hostname = 'localhost';

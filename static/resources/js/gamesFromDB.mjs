@@ -34,12 +34,20 @@ function createGameMiniature(game_name,game_illustration) {
     game_miniature.className = 'miniature';
     game_miniature.title = `Go to ${game_name}`;
 
-    game_miniature.innerHTML = `
-    <a href="/static/${game_name.toLowerCase()}" style="text-decoration: none; display: block; max-width:100%;">
-        <h3>${game_name}</h3>
-        <img src=../resources/images/games/${game_illustration} alt="${game_name} illustration">
-    </a>
-    `;
-
+    if (game_illustration === '') {
+      game_miniature.innerHTML = `
+      <a href="/static/${game_name.toLowerCase()}"style="text-decoration: none; display: block; max-width:100%;">
+          <h3>${game_name}</h3>
+          <img src='https://picsum.photos/300/150' alt="${game_name} illustration">
+      </a>
+      `;
+    } else {
+        game_miniature.innerHTML = `
+        <a href="/static/${game_name.toLowerCase()}"style="text-decoration: none; display: block; max-width:100%;">
+            <h3>${game_name}</h3>
+            <img src=../resources/images/games/${game_illustration} alt="${game_name} illustration">
+        </a>
+        `;
+    }
     return game_miniature;
 }

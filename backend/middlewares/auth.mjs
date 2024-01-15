@@ -13,7 +13,7 @@ import { getTableRowColumnsFromId } from '../models/models.mjs';
 export async function checkUserPasswordFromId(user_id,attempt_password) {
     let password_matches = false;
     if (user_id != null) {
-        const user_password_hash = await getTableRowColumnsFromId('Users',user_id,['password']);
+        const user_password_hash = await getTableRowColumnsFromId('User',user_id,['password']);
         if (user_password_hash.hasOwnProperty('password')) {
             password_matches = bcrypt.compare(attempt_password,user_password_hash.password);
         }
