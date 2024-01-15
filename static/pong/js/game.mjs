@@ -29,6 +29,7 @@ document.addEventListener("keydown", async (e) => {
 	let game_state = document.getElementById('gameState');
 	if (game_state != null){
 		if (e.key == ' ') {
+      e.preventDefault();
 			if (game_status == 1) {
 				game_status = 2;
 				cancelAnimationFrame(current_animation_id);
