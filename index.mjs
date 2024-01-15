@@ -2,6 +2,7 @@ import express from 'express'
 import session from 'express-session';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
+import { csrf } from 'lusca';
 import dotenv from 'dotenv';
 dotenv.config();
 import { static_dir_path } from './backend/constants.mjs';
@@ -22,6 +23,7 @@ app.use(session({
     saveUninitialized: false,
     cookie: { secure: false }
 }));
+app.use(csrf());
 
 // ### ROUTES ###
 app.use("/static", express.static(static_dir_path));
