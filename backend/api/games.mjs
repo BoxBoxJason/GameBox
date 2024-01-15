@@ -73,13 +73,14 @@ games_api_router.get('', async function(req,res) {
 });
 
 // Get all music files for a given game
-games_api_router.get('/musics_files_paths/:game_name', async function(req, res){
-    const game_id = getGameIdFromName(req.params.game_name);
+games_api_router.get('/musics_files_paths/:game_name', function(req, res){
+    const game_name = req.params.game_name;
+    const game_id = getGameIdFromName(game_name);
     if (game_id == null) {
-        res.status(404).json({ message:`Game name ${req.params.game_name} does not exist` });
+        res.status(404).json({ message:`Game name ${game_name} does not exist` });
     } else {
-        const musics_dir_path = join(static_dir_path,req.params.game_name,'musics');
-        const files = fs.readdirSync(musics_dir_path).map(file => `/static/${req.params.game_name}/musics/${file}`);
+        const musics_dir_path = join(static_dir_path,game_name,'musics');
+        const files = fs.readdirSync(musics_dir_path).map(file => `/static/${game_name}/musics/${file}`);
         res.json(files);
     }
 });
